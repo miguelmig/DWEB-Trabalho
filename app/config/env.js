@@ -1,0 +1,1 @@
+module.exports.lhost = "http://localhost:3000"
