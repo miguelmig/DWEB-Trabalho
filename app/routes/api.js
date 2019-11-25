@@ -29,6 +29,11 @@ router.get('/user/:userid/posts', (req, res) => {
     .catch(err => res.status(500).jsonp(err));
 })
 
+router.post('/post', (req, res) => {
+    posts.add(req.body)
+        .then(data => res.jsonp(data))
+        .catch(err => res.status(500).jsonp(err));
+})
 
 router.post('/post/:postid', (req, res) => {
     var postid = req.params.postid;
@@ -37,14 +42,10 @@ router.post('/post/:postid', (req, res) => {
     .catch(err => res.status(500).jsonp(err));
 })
 
-router.post('/post', (req, res) => {
-    posts.add(req.body)
-        .then(data => res.jsonp(data))
-        .catch(err => res.status(500).jsonp(err));
-})
 
-router.get('/posts/', function(req, res, next) 
+router.get('/posts', function(req, res, next) 
 {
+    console.log(req.query)
     if(req.query['tag'])
     {
         posts.getByTag(req.query.tag)

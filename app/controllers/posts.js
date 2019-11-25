@@ -1,7 +1,5 @@
 const Post = require('../models/post');
 
-const PostsController = module.exports;
-
 /**
  * Adds a new post to the collection
  * 
@@ -10,7 +8,7 @@ const PostsController = module.exports;
 module.exports.add = (postData) => {
     const newPost = new Post({
         date: postData.date,
-        user: postData.user,
+        user_id: postData.user_id,
         title: postData.title,
         tags: postData.tags,
         content: postData.content,
@@ -33,7 +31,7 @@ module.exports.delete = (postId) => {
 }
 
 /**
- * Return the information of a post, given the id of said post
+ * Returns the information of a post, given the id of said post
  * 
  * @param {string} postId
  */
@@ -44,7 +42,7 @@ module.exports.getById = (postId) => {
 }
 
 /**
- * Return a list of posts, given the user that posted said posts
+ * Returns a list of posts, given the user that posted said posts
  * 
  * @param {string} userId
  */
@@ -55,15 +53,12 @@ module.exports.getByUser = (userId) => {
 }
 
 /**
- * Return a list of posts that have the given tag
+ * Returns a list of posts that have the given tag
  * 
  * @param {string} tag
  */
 module.exports.getByTag = (tag) => {
     return Post
-            .aggregate([
-                { $unwind: '$tags' },
-                { $match: tag }
-            ])
+            .find({ tags: tag })
             .exec()
 }
