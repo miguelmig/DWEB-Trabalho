@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-const User = require('./user')
-const File = require('./file');
+const User = require('./user').schema;
+const File = require('./file').schema;
+
 
 const Comment = new mongoose.Schema({
     date: { type: Date, required: true },
@@ -18,5 +19,6 @@ const PostSchema = new mongoose.Schema({
     attachments: { type: [File], required: true },
     comments: { type: [Comment], required: true }
 });
+
 
 module.exports = mongoose.model('Post', PostSchema);
