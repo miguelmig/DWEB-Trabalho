@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const User = require('../models/user');
-const File = require('../models/file');
+const User = require('../models/user').schema;
+const File = require('../models/file').schema;
 
 const ChatMessageSchema = new mongoose.Schema({
     date: { type: Date, required: true },
