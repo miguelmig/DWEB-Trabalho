@@ -1,8 +1,10 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.col-sidebar {
+  background-color: #3C454E;
+  width: 256px;
 }
 
-a {
-  color: #00B7FF;
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
 }
+
