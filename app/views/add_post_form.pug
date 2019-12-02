@@ -1,5 +1,5 @@
-form(method="POST" action="/post").form-group
+form(method="POST" action="/post" enctype="multipart/form-data").form-group
     input(type="text" placeholder="Título" name="title")
-    input(type="text" placeholder="tags" name="tags")
+    input.form-control(type="text" data-role="tagsinput" name="tags")
     input(type="text" placeholder="Conteúdo" name="content")
     button(type="submit").btn.btn-primary Nova Publicação

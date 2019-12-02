@@ -38,6 +38,7 @@ router.get('/user/:userid/posts', (req, res) => {
 
 router.post('/post', upload.array('ficheiro'), (req, res) => {
     console.log("Entrei")
+    console.dir(req.body)
     var promises = [];
 
     let date = new Date();
@@ -72,7 +73,7 @@ router.post('/post', upload.array('ficheiro'), (req, res) => {
         }));
     }
 
-    post.save()
+    posts.add(post)
     .then(post => {
         console.log("Post saved with sucess!");
         res.jsonp(post);
