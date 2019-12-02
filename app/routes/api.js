@@ -37,13 +37,14 @@ router.get('/user/:userid/posts', (req, res) => {
 })
 
 router.post('/post', upload.array('ficheiro'), (req, res) => {
-
+    console.log("Entrei")
     var promises = [];
 
     let date = new Date();
     let post = {
         date: date.toISOString(),
-        user_id: req.user.id,
+        //user_id: req.user.id,
+        user_id: 1,
         title: req.body.title,
         tags: req.body.tags,
         content: req.body.content,
