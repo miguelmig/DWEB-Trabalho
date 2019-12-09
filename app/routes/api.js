@@ -8,7 +8,7 @@ const multer = require('multer');
 var upload = multer({dest: 'uploads/'});
 
 const Ficheiro = require('../models/file');
-
+const fs = require('fs');
 
 
 // User Api
@@ -57,7 +57,7 @@ router.post('/post', upload.array('ficheiro'), (req, res) => {
     {
         let current_file = req.files[i];
         let old_path = __dirname + "/../" + current_file.path;
-        let new_path = __dirname + '/../public/ficheiros' + current_file.originalname;
+        let new_path = __dirname + '/../public/ficheiros/' + current_file.originalname;
         
         fs.rename(old_path, new_path, err => {
             if(err)
@@ -72,6 +72,8 @@ router.post('/post', upload.array('ficheiro'), (req, res) => {
             size: current_file.size
         }));
     }
+
+    console.log("cheguei aqui");
 
     posts.add(post)
     .then(post => {

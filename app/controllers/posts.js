@@ -62,3 +62,10 @@ module.exports.getByTag = (tag) => {
             .find({ tags: tag })
             .exec()
 }
+
+module.exports.getRecent = (start, limit) => {
+    return Post
+            .find()
+            .limit(limit)
+            .exec();
+}
