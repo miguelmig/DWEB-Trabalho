@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var posts = require('../controllers/posts');
 var users = require('../controllers/users');
+var chat_messages = require('../controllers/chat_message');
 var url = require('url');
 
 const multer = require('multer');
@@ -120,5 +121,6 @@ router.get('/posts', function(req, res, next)
     }
 
 });
+
 
 module.exports = router;
