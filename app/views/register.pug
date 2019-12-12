@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    div.container-fluid.h-100
+        div.row.h-100.d-flex
+            div.col-6.mx-auto.d-flex
+                form(action="/user", method="POST").h-75.w-100.my-auto
+                    h1(align="center") Registrar
+                    hr
+                    div.form-group
+                        input(placeholder="Name").form-control.form-control-lg
+                        br
+                        input(placeholder="Username").form-control.form-control-lg
+                        br
+                        input(placeholder="Number").form-control.form-control-lg
+                        br
+                        input(placeholder="Course").form-control.form-control-lg
+

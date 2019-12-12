@@ -1,9 +1,21 @@
 div.container-fluid
-    div.row(style="height:150px").border-bottom.border-secondary
+    div.row(style="height:120px").border-bottom.border-secondary
         // Profile picture
-        div.col-6.h-100.d-flex.bg-warning
-            img(style="height: 60%;").rounded.my-auto.mx-auto(src="images/no-profile.png")
+        div.col-5.h-100.d-flex
+            img(style="height: 55%;").rounded.my-auto.mx-auto(src="images/no-profile.png")
         
-        div.col-6.h-100.bg-primary
+        div.col-7.h-100
+            div.row.h-100.d-flex
+                div.col(style="height: 60%").my-auto
+                    div.row(style="height: 35%").text-secondary.d-flex
+                        p(style="color: gainsboro; font-size: 18px").my-auto Full 
+                            b Name
+                    div.row(style="height: 30%").text-secondary
+                        p(style="font-size: 14px").my-auto @pg41192
+                    div.row(style="height: 35%")
+                        img(src="images/online-light.png" style="width: 14px").my-auto
+                        p(style="font-size: 13px").my-auto.text-secondary Online
+
+            
 
         

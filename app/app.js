@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 
-var config = require('config/env.js');
+var config = require('./config/env.js');
 
 mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(()=> console.log('Mongo ready: ' + mongoose.connection.readyState))
@@ -25,7 +25,7 @@ var flash = require('connect-flash')
 var bcrypt = require('bcryptjs')
 // ---------------------------------------
 
-var getJWTApiToken = require('helpers/jwt_helper.js').getJWTApiToken;
+var getJWTApiToken = require('./helpers/jwt_helper.js').getJWTApiToken;
 
 passport.use(new LocalStrategy(
   {usernameField:'email'}, (email,password, done) => {
