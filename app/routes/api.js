@@ -13,7 +13,7 @@ const fs = require('fs');
 
 
 // User Api
-router.get('/user/:userid', (req, res) => {
+router.get('/user/:userid', check_token, (req, res) => {
     var userid = req.params.userid;
     users.getById(userid)
     .then(data => {
@@ -24,20 +24,20 @@ router.get('/user/:userid', (req, res) => {
     });
 })
 
-router.post('/user/', (req, res) => {
+router.post('/user/', check_token, (req, res) => {
     users.add(req.body)
     .then(data => res.redirect('/'))
     .catch(err => res.status(500).jsonp(err));
 })
 
-router.get('/user/:userid/posts', (req, res) => {
+router.get('/user/:userid/posts', check_token, (req, res) => {
     var userid = req.params.userid;
     posts.getByUser(userid)
     .then(data => res.jsonp(data))
     .catch(err => res.status(500).jsonp(err));
 })
 
-router.post('/post', upload.array('ficheiro'), (req, res) => {
+router.post('/post', check_token, upload.array('ficheiro'), (req, res) => {
     console.log("Entrei")
     console.dir(req.body)
     var promises = [];
@@ -87,7 +87,7 @@ router.post('/post', upload.array('ficheiro'), (req, res) => {
     });
 })
 
-router.get('/post/:postid', (req, res) => {
+router.get('/post/:postid', check_token, (req, res) => {
     var postid = req.params.postid;
     posts.getById(postid)
     .then(data => res.jsonp(data))
@@ -95,7 +95,7 @@ router.get('/post/:postid', (req, res) => {
 })
 
 
-router.get('/posts', function(req, res, next) 
+router.get('/posts', check_token, function(req, res, next) 
 {
     console.log(req.query)
     if(req.query['tag'])
@@ -122,5 +122,17 @@ router.get('/posts', function(req, res, next)
 
 });
 
+
+function check_token(req, res, next)
+{
+    if(req.query['token'])
+    {
+        next();
+    }
+    else
+    {
+        res.status(401).jsonp({"error": "Didn't send JWT token for authentication in API."});
+    }
+}
 
 module.exports = router;

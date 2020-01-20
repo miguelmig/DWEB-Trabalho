@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    .container
+        table.table-dark.table-striped
+            th Titulo
+            th Conteúdo
+            each post in posts
+                tr
+                    td= post.title
+                    td= post.content
