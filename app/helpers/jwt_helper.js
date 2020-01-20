@@ -4,7 +4,6 @@ var private_key = null;
 var fs = require('fs');
 const credentials = require('../config/credentials');
 
-
 function getJWTApiToken()
 {
     if(!api_token)
