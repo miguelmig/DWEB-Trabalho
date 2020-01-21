@@ -11,7 +11,7 @@ function getJWTApiToken()
         api_token = jwt.sign({ sub: 'token gerado na aula de DAW2019' },
             "segredo",
             {
-                algorithm: 'RS256',
+                
                 expiresIn: 60*60*24*7,
                 issuer: "jwt_helper.js(WebServer)"
             })

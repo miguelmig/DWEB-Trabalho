@@ -9,8 +9,8 @@ var passport = require('passport');
 var apihelper = require('../helpers/api_url.js');
 
 /* GET home page. */
-function renderUserPage(res, username) {
-
+function renderUserPage(res, user) {
+	res.render('main_page', {user: user});
 }
 
 router.get('/posts', verificaAutenticao, function(req,res) {
@@ -24,10 +24,12 @@ router.get('/posts', verificaAutenticao, function(req,res) {
 router.get('/', function(req, res, next) {
 	if(req.isAuthenticated())
 	{
-		renderUserPage(res, req.user.username);
+		console.log("Authenticated, sending to main page");
+		renderUserPage(res, req.user);
 	}
 	else
 	{
+		console.log("Not authenticated! Sending to front page");
 		res.render('index', { title: 'Homepage' });
 	}
 });

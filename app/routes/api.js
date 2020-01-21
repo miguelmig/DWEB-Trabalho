@@ -25,9 +25,22 @@ router.get('/user/:userid', check_token, (req, res) => {
 })
 
 router.post('/user/', check_token, (req, res) => {
-    users.add(req.body)
-    .then(data => res.redirect('/'))
-    .catch(err => res.status(500).jsonp(err));
+    users.getById(req.body.id)
+    .then(data => {
+        if(Array.isArray(data) && data.length)
+        {
+            res.status(409).jsonp({err: "That user already exists"});
+        }
+        else
+        {
+            users.add(req.body)
+            .then(data => res.jsonp(data))
+            .catch(err => res.status(500).jsonp(err));
+        }
+    })
+    .catch(err => {
+        res.status(500).jsonp(err);
+    })
 })
 
 router.get('/user/:userid/posts', check_token, (req, res) => {

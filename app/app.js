@@ -28,10 +28,11 @@ var bcrypt = require('bcryptjs')
 var getJWTApiToken = require('./helpers/jwt_helper').getJWTApiToken;
 
 passport.use(new LocalStrategy(
-  {usernameField:'email'}, (email,password, done) => {
-    axios.get(config.apiURL + '/utilizadores/' + email + '?token=' + getJWTApiToken())
+  {usernameField:'username'}, (username,password,done) => {
+    axios.get(config.apiURL + 'user/' + username + '?token=' + getJWTApiToken())
     .then(res => {
-      const user = res.data;
+      const user = res.data[0];
+      console.dir(user);
       if(!user) {
         return done(null, false, {message: 'Utilizador inexistente!\n'});
       }
@@ -51,13 +52,13 @@ passport.use(new LocalStrategy(
 passport.serializeUser((user, done) => {
   // Serialização do utilizador
   console.log("Vou serializar o user: " + JSON.stringify(user));
-  done(null, user.email);
+  done(null, user.id);
 })
 
 // Deserialização a partir do id obtém-se o utilizador
-passport.deserializeUser((email, done) => {
-  console.log("Vou deserializar o user: " + email)
-  axios.get('http://localhost:3003/utilizadores/' + email + '?token=' + getJWTApiToken())
+passport.deserializeUser((id, done) => {
+  console.log("Vou deserializar o user: " + id)
+  axios.get(config.apiURL + 'user/' + id + '?token=' + getJWTApiToken())
   .then(res => done(null, res.data))
   .catch(err => done(err, false));
 })
@@ -73,6 +74,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 
+app.use(session({
+  genid: req => {
+    //console.log("Dentro do middleware da sessão...");
+    return uuid();
+  },
+  store: new FileStore(),
+  secret: 'O meu segredo',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(logger('dev'));
@@ -94,10 +105,9 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  console.log("error handler called msg: " + err.message);
+  // render the error pag
+  res.status(err.status || 500).render('error');
 });
 
 module.exports = app;
