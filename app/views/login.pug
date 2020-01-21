@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    .container-fluid.h-100
+        div.row.h-100
+            div.col.h-100
+                h1 LOGIN
+                hr
+                form(action="/login" method="POST")
+                    input(type="text" name="email")
+                    br
+                    br
+                    input(type="password" name="password")
+                    br
+                    br
+                    input(type="submit" value="Enviar")

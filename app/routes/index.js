@@ -27,7 +27,8 @@ router.get('/', function(req, res, next) {
 	}
 	else
 	{
-		res.render('index', { title: 'Homepage' });
+		//res.render('index', { title: 'Homepage' });
+		res.render('login');
 	}
 });
 
