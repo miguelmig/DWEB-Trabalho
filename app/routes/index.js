@@ -61,6 +61,11 @@ router.post('/login', passport.authenticate('local', {
 );
 
 
+router.get('/main', function (req, res) {
+	res.render('main_page');
+})
+
+
 function verificaAutenticao(req, res, next) {
 	if(req.isAuthenticated())
 	{
