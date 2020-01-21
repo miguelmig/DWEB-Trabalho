@@ -1,16 +1,16 @@
 extends layout
 
 block content
-    .container-fluid.h-100
-        div.row.h-100
-            div.col.h-100
-                h1 LOGIN
-                hr
-                form(action="/login" method="POST")
-                    input(type="text" name="email")
-                    br
-                    br
-                    input(type="password" name="password")
-                    br
-                    br
-                    input(type="submit" value="Enviar")
+    div.container-fluid.h-100
+        div.row.h-100.d-flex
+            div.col-6.mx-auto.d-flex
+                form(action="/login", method="POST").h-75.w-100.my-auto
+                    h1(align="center") Login
+                    hr
+                    div.form-group(align="center")
+                        input(type="text" placeholder="Username", name = "username").form-control.form-control-lg
+                        br
+                        input(type="password" placeholder="Password", name = "password").form-control.form-control-lg
+                        br
+                        input.btn.btn-primary(type="submit" value="Login")
+

@@ -4,15 +4,19 @@ block content
     div.container-fluid.h-100
         div.row.h-100.d-flex
             div.col-6.mx-auto.d-flex
-                form(action="/user", method="POST").h-75.w-100.my-auto
-                    h1(align="center") Registrar
+                form(action="/register", method="POST").h-75.w-100.my-auto
+                    h1(align="center") Registar
                     hr
-                    div.form-group
-                        input(placeholder="Name", name="full_name").form-control.form-control-lg
+                    div.form-group(align="center")
+                        input(type="text" placeholder="Name", name="full_name").form-control.form-control-lg
                         br
-                        input(placeholder="Username", name = "username").form-control.form-control-lg
+                        input(type="text" placeholder="Username", name = "username").form-control.form-control-lg
                         br
-                        input(placeholder="Number", name="id").form-control.form-control-lg
+                        input(type="password" placeholder="Password", name = "password").form-control.form-control-lg
                         br
-                        input(placeholder="Course", name="course").form-control.form-control-lg
+                        input(type="text" placeholder="Number", name="id").form-control.form-control-lg
+                        br
+                        input(type="text" placeholder="Course", name="course").form-control.form-control-lg
+                        br
+                        input.btn.btn-primary(type="submit" value="Registar")
 

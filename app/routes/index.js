@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios');
 var url = require('url');
+var bcrypt = require('bcryptjs')
 
 var config = require('../config/env.js');
 var passport = require('passport');
-var getAPIURL = require('../helpers/api_url.js');
+var apihelper = require('../helpers/api_url.js');
 
 /* GET home page. */
 function renderUserPage(res, username) {
@@ -27,8 +28,7 @@ router.get('/', function(req, res, next) {
 	}
 	else
 	{
-		//res.render('index', { title: 'Homepage' });
-		res.render('login');
+		res.render('index', { title: 'Homepage' });
 	}
 });
 
@@ -38,7 +38,7 @@ router.get('/register', function(req,res) {
 
 router.post('/register', function(req, res) {
 	var hash = bcrypt.hashSync(req.body.password, 10);
-    axios.post(getAPIURL('user/'), {
+    axios.post(apihelper.getAPIURL('user/'), {
         id: req.body.id,
         username: req.body.username,
 		password: hash,
@@ -54,11 +54,11 @@ router.get('/login', function(req, res) {
   	res.render('login', {title: 'Login'});
 });
 
-router.post('/login', passport.authenticate('local',
-	{
+router.post('/login', passport.authenticate('local', {
 		successRedirect: "/",
 		failureRedirect: "/login"
-	}));
+	})
+);
 
 
 function verificaAutenticao(req, res, next) {
