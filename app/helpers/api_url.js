@@ -1,5 +1,5 @@
-var config = require('./config/env.js');
-var getJWTApiToken = require('./helpers/jwt_helper.js').getJWTApiToken;
+var config = require('../config/env.js');
+var getJWTApiToken = require('./jwt_helper.js').getJWTApiToken;
 
 module.exports.getAPIURL = (url) =>
 {

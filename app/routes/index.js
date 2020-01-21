@@ -3,7 +3,7 @@ var router = express.Router();
 var axios = require('axios');
 var url = require('url');
 
-var config = require('./config/env.js');
+var config = require('../config/env.js');
 var passport = require('passport');
 var getAPIURL = require('../helpers/api_url.js');
 
