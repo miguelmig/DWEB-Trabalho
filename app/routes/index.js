@@ -41,10 +41,9 @@ router.get('/register', function(req,res) {
 router.post('/register', function(req, res) {
 	var hash = bcrypt.hashSync(req.body.password, 10);
     axios.post(apihelper.getAPIURL('user/'), {
-        id: req.body.id,
-        username: req.body.username,
-		password: hash,
 		full_name: req.body.full_name,
+        id: req.body.id,
+		password: hash,
 		course: req.body.course,
 		subscribed_tags: []
     })
