@@ -10,7 +10,7 @@ var apihelper = require('../helpers/api_url.js');
 
 /* GET home page. */
 function renderUserPage(res, user) {
-	res.render('main_page', {user: user});
+	res.render('main/main_page', {user: user});
 }
 
 router.get('/posts', verificaAutenticao, function(req,res) {
