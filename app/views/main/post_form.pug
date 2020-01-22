@@ -1,4 +1,10 @@
-div.container-fluid.bg-warning
+div.container-fluid
     br
-    div.row.bg-primary
-        h1 ola
+    div.row
+        .col.h-100
+            div.card
+                div.card-body
+                    h5.card-title Faz uma publicação
+                    form(action="/post", method="post")
+                        div.form-group
+                            textarea.form-control(rows="5" placeholder="Escrever aqui...")
