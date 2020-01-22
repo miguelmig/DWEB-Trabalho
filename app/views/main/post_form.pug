@@ -7,11 +7,12 @@ div.container-fluid
                     h5.card-title Faz uma publicação
                     form(action="/post", method="post")
                         div.form-group
-                            textarea.form-control(rows="5" placeholder="Escrever aqui...")
+                            textarea.form-control(rows="4" placeholder="Escrever aqui...")
                         
                         div.form-group
                             input.form-control(name='tags')
                         <script src="/javascripts/init_tagify.js"></script>
 
                         div.form-group.mb-0
-                            input.btn.btn-lg.btn-primary.mb-0(type="submit" value="Publicar")
+                            img.ml-2.mt-2(src="images/add-file-icon.png", height="30px")
+                            input.btn.btn-lg.btn-primary.mb-0.float-right(type="submit" value="Publicar")
