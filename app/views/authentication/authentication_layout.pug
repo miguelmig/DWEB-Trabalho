@@ -10,6 +10,10 @@ html(style="height: 100%")
 
         <link href="stylesheets/floating-labels.css" rel="stylesheet">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+        <script>$(function() {$('.chosen-select').chosen();$('.chosen-select-deselect').chosen({ allow_single_deselect: true });});</script>
+
         
     body(style="height: 100%")
         block content

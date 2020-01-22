@@ -7,16 +7,21 @@ block content
             h1.h3.mb-3.font-weight-normal Registar
         
         div.form-label-group
-            input.form-control(type="text" id="inputName" placeholder="Name" required autofocus)
-            label(for="inputName") Nome
+            input.form-control(type="text" id="inputName" name="full_name" placeholder="Nome completo" required autofocus)
+            label(for="inputName") Nome completo
 
         div.form-label-group
-            input.form-control(type="text" id="inputNumber" placeholder="Number" required)
+            input.form-control(type="text" id="inputNumber" name="id" placeholder="Number" required)
             label(for="inputNumber") Número de aluno
 
         div.form-label-group
-            input.form-control(type="password" id="inputPassword" placeholder="Password" required)
+            input.form-control(type="password" id="inputPassword" name="password" placeholder="Password" required)
             label(for="inputPassword") Palavra-passe
+
+        div.form-label-group
+            // input.form-control(type="text" id="inputCourse" name="course" // placeholder="Curso" required)
+            // label(for="inputNumber") Curso
+            select.chosen-select(data-placeholder="Curso" multiple tabindex="4")
 
         div.checkbox.mb-3
             label 
