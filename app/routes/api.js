@@ -107,7 +107,6 @@ router.get('/post/:postid', check_token, (req, res) => {
     .catch(err => res.status(500).jsonp(err));
 })
 
-
 router.get('/posts', check_token, function(req, res, next) 
 {
     console.log(req.query)

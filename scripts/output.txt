@@ -1,29 +1,3 @@
-extends authentication_layout
-
-block content
-    form(action="/register", method="POST").form-signin
-        div.text-center.mb-4
-            img.mb-4(src="images/s4slogo.png" width="200" height="200")
-            h1.h3.mb-3.font-weight-normal Registar
-        
-        div.form-label-group
-            input.form-control(type="text" id="inputName" name="full_name" placeholder="Nome completo" required autofocus)
-            label(for="inputName") Nome completo
-
-        div.form-label-group
-            input.form-control(type="text" id="inputNumber" name="id" placeholder="Number" required)
-            label(for="inputNumber") Número de aluno
-
-        div.form-label-group
-            input.form-control(type="password" id="inputPassword" name="password" placeholder="Password" required)
-            label(for="inputPassword") Palavra-passe
-
-        div.form-label-group
-            // input.form-control(type="text" id="inputCourse" name="course" // placeholder="Curso" required)
-            // label(for="inputNumber") Curso
-
-            select.form-control.chosen-select(name="course" data-placeholder="Curso" single tabindex="4")
-                option(value="") 
                 option(value="AP") Administração Pública
                 option(value="A") Arqueologia
                 option(value="AV") Artes Visuais
@@ -75,16 +49,3 @@ block content
                 option(value="ET") Engenharia Têxtil 
                 option(value="M") Medicina
                 option(value="P") Psicologia
-
-
-
-
-        div.checkbox.mb-3
-            label 
-                input(type="checkbox" value="remember-me")
-                |  Lembrar-me
-             
-        button.btn.btn-lg.btn-primary.btn-block(type="submit") Registar
-
-        p.mt-5.mb-3.text-muted.text-center &copy; 2019-2020
-
