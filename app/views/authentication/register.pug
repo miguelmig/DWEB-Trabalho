@@ -1,7 +1,7 @@
 extends authentication_layout
 
 block content
-    form(action="/register", method="post").form-signin
+    form(action="/register", method="POST").form-signin
         div.text-center.mb-4
             img.mb-4(src="images/s4slogo.png" width="200" height="200")
             h1.h3.mb-3.font-weight-normal Registar
@@ -21,6 +21,12 @@ block content
         div.form-label-group
             // input.form-control(type="text" id="inputCourse" name="course" // placeholder="Curso" required)
             // label(for="inputNumber") Curso
+
+            select.form-control.chosen-select(name="course" data-placeholder="Curso" single tabindex="4")
+                option(value="") 
+                option(value="MEI") MEI - Mestrado em Engenharia Informática
+                option(value="MIEI") MIEI - Mestrado Integrado em Engenharia Informática
+
 
         div.checkbox.mb-3
             label 

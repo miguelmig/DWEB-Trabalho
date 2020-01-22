@@ -28,7 +28,7 @@ var bcrypt = require('bcryptjs')
 var getJWTApiToken = require('./helpers/jwt_helper').getJWTApiToken;
 
 passport.use(new LocalStrategy(
-  {usernameField:'username'}, (username,password,done) => {
+  {usernameField:'username'}, (username,password, done) => {
     axios.get(config.apiURL + 'user/' + username + '?token=' + getJWTApiToken())
     .then(res => {
       const user = res.data[0];
@@ -59,7 +59,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   console.log("Vou deserializar o user: " + id)
   axios.get(config.apiURL + 'user/' + id + '?token=' + getJWTApiToken())
-  .then(res => done(null, res.data))
+  .then(res => done(null, res.data[0]))
   .catch(err => done(err, false));
 })
 
