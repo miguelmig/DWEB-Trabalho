@@ -20,7 +20,6 @@ module.exports.getById = (userId) => {
 module.exports.add = (userData) => {
     const newUser = new User({
         id: userData.id,
-        username: userData.username,
         password: userData.password,
         full_name: userData.full_name,
         course: userData.course,
