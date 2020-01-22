@@ -1,0 +1,29 @@
+extends authentication_layout
+
+block content
+    form(action="/register", method="post").form-signin
+        div.text-center.mb-4
+            img.mb-4(src="images/s4slogo.png" width="200" height="200")
+            h1.h3.mb-3.font-weight-normal Registar
+        
+        div.form-label-group
+            input.form-control(type="text" id="inputName" placeholder="Name" required autofocus)
+            label(for="inputName") Nome
+
+        div.form-label-group
+            input.form-control(type="text" id="inputNumber" placeholder="Number" required)
+            label(for="inputNumber") Número de aluno
+
+        div.form-label-group
+            input.form-control(type="password" id="inputPassword" placeholder="Password" required)
+            label(for="inputPassword") Palavra-passe
+
+        div.checkbox.mb-3
+            label 
+                input(type="checkbox" value="remember-me")
+                |  Lembrar-me
+             
+        button.btn.btn-lg.btn-primary.btn-block(type="submit") Registar
+
+        p.mt-5.mb-3.text-muted.text-center &copy; 2019-2020
+

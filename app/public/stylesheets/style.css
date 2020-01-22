@@ -1,3 +1,7 @@
+body {
+  background-color: #f5f5f5;
+}
+
 .col-sidebar {
   background-color: #3C454E;
   width: 256px;
@@ -10,12 +14,10 @@
 
 .navbar-s4s {
   box-shadow: 0 2px 4px rgba(0,0,0,.04);
+  height: 70px;
+  line-height: 100px;
 }
 
 .navbar {
   font-family: Raleway, sans-serif;
-}
-
-.navbar-nav > li {
-  display: inline-block;
 }

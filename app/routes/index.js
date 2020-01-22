@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function(req,res) {
-  	res.render('register', {title: 'Registar'});
+  	res.render('authentication/register', {title: 'Registar'});
 });
 
 router.post('/register', function(req, res) {
@@ -53,7 +53,7 @@ router.post('/register', function(req, res) {
 })
 
 router.get('/login', function(req, res) {
-  	res.render('login', {title: 'Login'});
+  	res.render('authentication/login', {title: 'Conetar'});
 });
 
 router.post('/login', passport.authenticate('local', {
@@ -64,7 +64,7 @@ router.post('/login', passport.authenticate('local', {
 
 
 router.get('/main', function (req, res) {
-	res.render('main_page');
+	res.render('main/main_page', {title: 'Página principal'});
 })
 
 

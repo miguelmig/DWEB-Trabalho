@@ -1,8 +1,9 @@
 form(
     method="POST" 
-    action="/api/post" 
+    action="/post" 
     enctype="multipart/form-data").form-group
+
     input(type="text" placeholder="Título" name="title")
     input(type="text" placeholder="Conteúdo" name="content")
-    input(placeholder="Tags" name="tags" onkeydown="return event.key != 'Enter';")
+    //input(placeholder="Tags" name="tags" onkeydown="return event.key != 'Enter';")
     button(type="submit").btn.btn-primary Nova Publicação
