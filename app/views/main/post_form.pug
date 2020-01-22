@@ -2,9 +2,15 @@ div.container-fluid
     br
     div.row
         .col.h-100
-            div.card
+            div.card.mb-0
                 div.card-body
                     h5.card-title Faz uma publicação
                     form(action="/post", method="post")
                         div.form-group
                             textarea.form-control(rows="5" placeholder="Escrever aqui...")
+                        
+                        div.form-group
+                            input.form-control(type="text")
+                            
+                        div.form-group.mb-0
+                            input.btn.btn-lg.btn-primary.mb-0(type="submit" value="Publicar")
