@@ -49,6 +49,7 @@ module.exports.getById = (postId) => {
 module.exports.getByUser = (userId) => {
     return Post
             .find({ user_id: userId })
+            .sort('-date')
             .exec()
 }
 
@@ -68,5 +69,6 @@ module.exports.getRecent = (start, limit) => {
     return Post
             .find()
             .limit(limit)
+            .sort('-date')
             .exec();
 }
