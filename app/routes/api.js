@@ -120,15 +120,14 @@ router.get('/posts', check_token, function(req, res, next)
             {
                 promises.push(users.getById(data[i].user_id));
             }
+            var new_array = Array.from(data);
             Promise.all(promises)
             .then(values => {
-                var new_data = Array.from(data);
                 for(let j = 0; j < values.length; j++)
                 {
-                    new_data[j].poster_name = values[j].full_name;
+                    new_array[j]['_doc'].poster_name = values[j][0].full_name;
                 }
-                console.log(new_data[0]['poster_name']);
-                res.jsonp(new_data);
+                res.jsonp(new_array);
             })
             .catch(err => res.status(500).jsonp(err));
         })
