@@ -120,8 +120,9 @@ module.exports.getByTags = (tags) => {
 module.exports.getRecent = (start, limit) => {
     return Post
             .find()
-            .limit(limit)
             .sort('-date')
+            .skip(start)
+            .limit(limit)
             .exec();
 }
 

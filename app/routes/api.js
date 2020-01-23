@@ -64,7 +64,7 @@ router.post('/post/:idpost/comment', check_token, (req, res) => {
         content: req.body.content,
         from: req.body.from
     }
-    
+
     posts.addComment(req.params.idpost, comment)
     .then(data => res.jsonp(data))
     .catch(err => res.status(500).jsonp(err))
@@ -157,7 +157,7 @@ router.get('/posts', check_token, function(req, res, next)
                     for(let x = 0; x < new_array.length; x++)
                     {
                         // remove duplicates
-                        if(ids.find(id => id == new_array[x]['_doc']._id) === undefined)
+                        if(ids.find(id => id == new_array[x]._id) === undefined)
                         {
                             final_array.push(new_array[x]);
                             ids.push(new_array[x]["_id"]);
@@ -227,15 +227,31 @@ router.get('/posts', check_token, function(req, res, next)
     {
         var start = 0;
         if(req.query['start'])
-            start = parseInteger(req.query.start);
+            start = parseInt(req.query.start);
 
         var limit = 25; // Only show 25 publications at a time
         if(req.query['limit'])
-            limit = parseInteger(req.query.limit);
+            limit = parseInt(req.query.limit);
 
 
         posts.getRecent(start, limit)
-        .then(data => res.jsonp(data))
+        .then(data => {
+            var promises = [];
+            for(let i = 0; i < data.length; i++)
+            {
+                promises.push(users.getById(data[i].user_id));
+            }
+            var new_array = Array.from(data);
+            Promise.all(promises)
+            .then(values => {
+                for(let j = 0; j < values.length; j++)
+                {
+                    new_array[j]['_doc'].poster_name = values[j][0].full_name;
+                }
+                res.jsonp(new_array);
+            })
+            .catch(err => res.status(500).jsonp(err));
+        })
         .catch(err => res.jsonp(err));
     }
 
