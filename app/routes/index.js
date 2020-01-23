@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
 	else
 	{
 		console.log("Not authenticated! Sending to front page");
-		res.redirect('main/main_page', { title: 'Homepage' });
+		res.render('main/main_page', { title: 'Homepage' });
 	}
 });
 

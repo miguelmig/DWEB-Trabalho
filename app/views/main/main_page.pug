@@ -8,9 +8,10 @@ block content
             .col-6
                 include post_form
                 hr
-                each p in posts
-                    include post
-                    hr
+                if typeof(posts) !== "undefined"
+                    each p in posts
+                        include post
+                        hr
             .col-3
 
         

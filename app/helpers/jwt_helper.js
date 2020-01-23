@@ -16,8 +16,8 @@ function getJWTApiToken()
                 issuer: "jwt_helper.js(WebServer)"
             })
     }
-    console.log('Token structure: ');
-    console.dir(api_token);
+    //console.log('Token structure: ');
+    //console.dir(api_token);
     return api_token;
 }
 
