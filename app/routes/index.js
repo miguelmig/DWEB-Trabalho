@@ -15,8 +15,9 @@ var upload = multer({ dest: 'uploads/' })
 
 /* GET home page. */
 function renderUserPage(res, user) {
-	axios.get(getAPIURL('posts?tag=random'))
+	axios.get(getAPIURL('posts') + '&tag=random')
 	.then(response => {
+		console.dir(response.data);
 		res.render('main/main_page',
 		{
 			title: 'Página principal', 
