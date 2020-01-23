@@ -14,8 +14,20 @@ var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
 /* GET home page. */
+function getTagsString(tags)
+{
+	var tag_string = ""
+	for(let i = 0; i < tags.length; i++)
+	{
+		tag_string += "&tag=" + tags[i].toLowerCase();
+	}
+	return tag_string
+}
+
 function renderUserPage(res, user) {
-	axios.get(getAPIURL('posts') + '&tag=random')
+	tags = getTagsString(user.subscribed_tags)
+	console.log("Subscribed tags: " + tags)
+	axios.get(getAPIURL('posts') + tags)
 	.then(response => {
 		console.dir(response.data);
 		res.render('main/main_page',
