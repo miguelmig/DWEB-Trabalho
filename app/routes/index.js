@@ -26,10 +26,9 @@ function getTagsString(tags)
 
 function renderUserPage(res, user) {
 	tags = getTagsString(user.subscribed_tags)
-	console.log("Subscribed tags: " + tags)
 	axios.get(getAPIURL('posts') + tags)
 	.then(response => {
-		console.dir(response.data);
+		//console.dir(response.data);
 		res.render('main/main_page',
 		{
 			title: 'Página principal', 
@@ -100,6 +99,15 @@ router.get('/main', function (req, res) {
 	
 })
 
+
+router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
+	axios.post(getAPIURL('post/' + req.params.idpost + "/comment"), {
+		from: req.user.id,
+		content: req.body.content
+	})
+	.then(data => res.redirect('/post/' + req.params.idpost))
+	.catch(err => res.render(error), {error: err})
+})
 
 router.post('/post', verificaAutenticao, upload.array('files'), function (req, res) {
 	console.log("Post front-page: ");

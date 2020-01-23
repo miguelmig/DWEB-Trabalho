@@ -57,6 +57,19 @@ router.put('/user/:userid/subscribed_tags', check_token, (req, res) => {
     .catch(err => res.status(500).jsonp(err));
 })
 
+router.post('/post/:idpost/comment', check_token, (req, res) => {
+    let date = new Date();
+    let comment = {
+        date: date.toISOString(),
+        content: req.body.content,
+        from: req.body.from
+    }
+    
+    posts.addComment(req.params.idpost, comment)
+    .then(data => res.jsonp(data))
+    .catch(err => res.status(500).jsonp(err))
+})
+
 router.post('/post', check_token, upload.array('files'), (req, res) => {
     console.log("Entrei")
     console.dir(req.body)
@@ -120,7 +133,7 @@ router.get('/posts', check_token, function(req, res, next)
 {
     if(req.query['tag'])
     {
-        console.dir(req.query.tag)
+        //console.dir(req.query.tag)
         if(req.query.tag instanceof Array)
         {
             posts.getByTags(req.query.tag)

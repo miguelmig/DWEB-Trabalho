@@ -124,3 +124,9 @@ module.exports.getRecent = (start, limit) => {
             .sort('-date')
             .exec();
 }
+
+module.exports.addComment = (postid, comment_info) => {
+    return Post.findByIdAndUpdate(postid, {
+        "$push": { comments: comment_info }
+    }).exec();
+}
