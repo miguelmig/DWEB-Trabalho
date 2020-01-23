@@ -63,6 +63,29 @@ module.exports.getByTag = (tag) => {
             .exec()
 }
 
+module.exports.getByTags = (tags) => {
+    return Post
+        .aggregate(
+            [
+                {
+                    "$unwind": "$tags"
+                },
+                {
+                    "$match": 
+                    {
+                        "$expr":
+                        {
+                            "$in": [
+                                "$tags",
+                                tags
+                            ]
+                        }
+                    }
+                }
+            ]
+        )
+} 
+
 module.exports.getRecent = (start, limit) => {
     return Post
             .find()
