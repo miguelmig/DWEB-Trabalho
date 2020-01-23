@@ -21,3 +21,12 @@ body {
 .navbar {
   font-family: Raleway, sans-serif;
 }
+
+.clickable
+{
+  cursor: pointer;
+}
+
+a { 
+  color: inherit;
+} 

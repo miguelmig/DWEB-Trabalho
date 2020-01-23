@@ -106,7 +106,13 @@ router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 		content: req.body.content
 	})
 	.then(data => res.redirect('/post/' + req.params.idpost))
-	.catch(err => res.render(error), {error: err})
+	.catch(err => res.render('error', {error: err}))
+})
+
+router.get('/post/:idpost', verificaAutenticao, (req, res) => {
+	axios.get(getAPIURL('post/' + req.params.idpost))
+	.then(response => res.render('main/post-page', {p: response.data}))
+	.catch(err => res.render('error' ,{error: err}))
 })
 
 router.post('/post', verificaAutenticao, upload.array('files'), function (req, res) {
