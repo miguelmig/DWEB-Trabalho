@@ -28,3 +28,9 @@ module.exports.add = (userData) => {
 
     return newUser.save();
 }
+
+module.exports.updateSubscribeTags = (id, subscribed_tags) => {
+    return User.updateOne({id: id},
+        {"$set": {"subscribed_tags": subscribed_tags}})
+        .exec();
+}

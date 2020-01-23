@@ -50,6 +50,13 @@ router.get('/user/:userid/posts', check_token, (req, res) => {
     .catch(err => res.status(500).jsonp(err));
 })
 
+router.put('/user/:userid/subscribed_tags', check_token, (req, res) => {
+    var userid = req.params.userid;
+    users.updateSubscribeTags(userid, req.body.tags)
+    .then(data => res.jsonp(data))
+    .catch(err => res.status(500).jsonp(err));
+})
+
 router.post('/post', check_token, upload.array('files'), (req, res) => {
     console.log("Entrei")
     console.dir(req.body)
@@ -143,7 +150,7 @@ router.get('/posts', check_token, function(req, res, next)
                             ids.push(new_array[x]["_id"]);
                         }
                     }
-                    
+
                     res.jsonp(final_array);
                 })
                 .catch(err => res.status(500).jsonp(err));
