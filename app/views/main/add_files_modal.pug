@@ -1,19 +1,18 @@
 div.form-group
-    div.modal.fade(id="addFilesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true")
+    div.modal.fade(id="addFilesModal" tabindex="-1" role="dialog"  aria-hidden="true")
         div.modal-dialog(role="document")
             div.modal-content
                 div.modal-header
-                    h5.modal-title Adicionar anexos
+                    h5.modal-title Anexos
                     button.btn.close(data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") &times;
                 
                 div.modal-body
                     div(id="listOfFiles")
-                        div(id="f1")
+                        div.mb-2(id="f1")
                             input(type="file" name="file")
                     
-                    button.btn.mb-0(id="plus1")
-                        h3.text-secondary.mb-0 &plus;
-                    //input.form-control(type="text" name="file" placeholder="Nome do ficheiro...")
+                    button.btn.mb-0.float-left.close(id="plus1")
+                        h3.mb-0 &plus;
                 
                 

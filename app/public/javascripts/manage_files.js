@@ -4,10 +4,10 @@ $(function () {
     $("#plus1").click(e => {
         e.preventDefault()
         cont++;
-        var newFileInput = $('<div></div>', {id: 'f'+cont})
-        var ficheiroInput = $('<input/>', {type:'file', name:'file'})
+        var newFileInputDiv = $('<div></div>', {class: "mb-2", id: 'f'+cont})
+        var newFileInput = $('<input/>', {type:'file', name:'file'})
 
-        $("#lista").append(newFileInput);
-        $("#f"+cont).append(ficheiroInput);
+        $("#listOfFiles").append(newFileInputDiv);
+        $("#f"+cont).append(newFileInput);
     });
 })
