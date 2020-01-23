@@ -118,6 +118,7 @@ router.get('/posts', check_token, function(req, res, next)
         {
             posts.getByTags(req.query.tag)
             .then(data => {
+                //console.dir(data);
                 var promises = [];
                 for(let i = 0; i < data.length; i++)
                 {
@@ -128,9 +129,22 @@ router.get('/posts', check_token, function(req, res, next)
                 .then(values => {
                     for(let j = 0; j < values.length; j++)
                     {
-                        new_array[j]['_doc'].poster_name = values[j][0].full_name;
+                        new_array[j].poster_name = values[j][0].full_name;
                     }
-                    res.jsonp(new_array);
+                    var ids = []
+                    var final_array = [];
+
+                    for(let x = 0; x < new_array.length; x++)
+                    {
+                        // remove duplicates
+                        if(ids.find(id => id == new_array[x]['_doc']._id) === undefined)
+                        {
+                            final_array.push(new_array[x]);
+                            ids.push(new_array[x]["_id"]);
+                        }
+                    }
+                    
+                    res.jsonp(final_array);
                 })
                 .catch(err => res.status(500).jsonp(err));
             })

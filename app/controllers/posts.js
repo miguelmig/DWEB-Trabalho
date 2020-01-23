@@ -70,6 +70,12 @@ module.exports.getByTags = (tags) => {
         .aggregate(
             [
                 {
+                    "$addFields": 
+                    {
+                        "tags_all": "$tags"
+                    }
+                },
+                {
                     "$unwind": "$tags"
                 },
                 {
@@ -83,9 +89,28 @@ module.exports.getByTags = (tags) => {
                             ]
                         }
                     }
+                },
+                {
+                    "$unset" : [
+                        "tags",
+                    ]
+                },
+                {
+                    "$project": 
+                    {
+                        "tags": "$tags_all",
+                        "date": 1,
+                        "user_id":1,
+                        "title":1,
+                        "content": 1,
+                        "attachments": 1,
+                        "comments": 1
+
+                    },
                 }
             ]
         )
+        .exec();
 } 
 
 module.exports.getRecent = (start, limit) => {
