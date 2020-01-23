@@ -50,7 +50,7 @@ router.get('/user/:userid/posts', check_token, (req, res) => {
     .catch(err => res.status(500).jsonp(err));
 })
 
-router.post('/post', check_token, upload.array('ficheiro'), (req, res) => {
+router.post('/post', check_token, upload.array('files'), (req, res) => {
     console.log("Entrei")
     console.dir(req.body)
     var promises = [];
@@ -58,8 +58,7 @@ router.post('/post', check_token, upload.array('ficheiro'), (req, res) => {
     let date = new Date();
     let post = {
         date: date.toISOString(),
-        //user_id: req.user.id,
-        user_id: 1,
+        user_id: req.body.id,
         title: req.body.title,
         tags: req.body.tags,
         content: req.body.content,
@@ -67,24 +66,27 @@ router.post('/post', check_token, upload.array('ficheiro'), (req, res) => {
         comments: [],
     };
 
-    for(let i = 0; i < req.files.length; ++i)
+    if(req.files)
     {
-        let current_file = req.files[i];
-        let old_path = __dirname + "/../" + current_file.path;
-        let new_path = __dirname + '/../public/ficheiros/' + current_file.originalname;
-        
-        fs.rename(old_path, new_path, err => {
-            if(err)
-            {
-                throw err;
-            }
-        });
-        
-        post.attachments.push(new Ficheiro({
-            name: current_file.originalname,
-            mimetype: current_file.mimetype,
-            size: current_file.size
-        }));
+        for(let i = 0; i < req.files.length; ++i)
+        {
+            let current_file = req.files[i];
+            let old_path = __dirname + "/../" + current_file.path;
+            let new_path = __dirname + '/../public/ficheiros/' + current_file.originalname;
+            
+            fs.rename(old_path, new_path, err => {
+                if(err)
+                {
+                    throw err;
+                }
+            });
+            
+            post.attachments.push(new Ficheiro({
+                name: current_file.originalname,
+                mimetype: current_file.mimetype,
+                size: current_file.size
+            }));
+        }
     }
 
     console.log("cheguei aqui");

@@ -10,6 +10,10 @@ var config = require('../config/env.js');
 var passport = require('passport');
 var apihelper = require('../helpers/api_url.js');
 
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
+
 /* GET home page. */
 function renderUserPage(res, user) {
 
@@ -81,8 +85,20 @@ router.get('/main', function (req, res) {
 })
 
 
-router.post('/post', verificaAutenticao, function (req, res) {
-	
+router.post('/post', verificaAutenticao, upload.array('files'), function (req, res) {
+	console.log("Post front-page: ");
+	console.dir(req.body);
+	var tags = JSON.parse( req.body.tags )
+	tags = tags.map((tag_dict) => tag_dict['value']);
+	axios.post(apihelper.getAPIURL('post/'), {
+		user_id: req.user.id,
+        title: req.body.title,
+		tags: tags,
+		content: req.body.content,
+		files: req.files,
+    })
+    .then(data => res.redirect('/'))
+    .catch(err => res.render('error', {error: err}));
 })
 
 
