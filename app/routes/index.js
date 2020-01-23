@@ -55,12 +55,12 @@ router.get('/register', function(req,res) {
 
 router.post('/register', function(req, res) {
 	var hash = bcrypt.hashSync(req.body.password, 10);
-    axios.post(apihelper.getAPIURL('user/'), {
+    axios.post(getAPIURL('user/'), {
 		full_name: req.body.full_name,
         id: req.body.id,
 		password: hash,
 		course: req.body.course,
-		subscribed_tags: []
+		subscribed_tags: [req.body.course]
     })
     .then(dados => res.redirect('/'))
     .catch(err => res.render('error', {error: err}));
