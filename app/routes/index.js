@@ -41,7 +41,7 @@ function renderUserPage(res, user) {
 }
 
 router.get('/posts', verificaAutenticao, function(req,res) {
-	axios.get(getAPIURL('posts' + url.parse(req.url).query))
+	axios.get(getAPIURL('posts') + url.parse(req.url).query)
 	.then(response => {
 		res.render('posts-page', {posts: response.data});
 	})

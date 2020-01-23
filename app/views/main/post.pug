@@ -2,7 +2,8 @@ div.card.mb-0
     div.card-body
         h3.mb-1= p.title
         each tag in p.tags
-            button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
+            a(href="/posts/?tag=" + tag)
+                button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
         hr
         img.rounded-circle.border.float-left.mr-3(src="images/no-profile.png", width="50", height="auto")
         div
