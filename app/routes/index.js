@@ -93,7 +93,7 @@ router.post('/post', verificaAutenticao, upload.array('files'), function (req, r
 	console.dir(req.body);
 	var tags = JSON.parse( req.body.tags )
 	tags = tags.map((tag_dict) => tag_dict['value']);
-	axios.post(apihelper.getAPIURL('post/'), {
+	axios.post(getAPIURL('post/'), {
 		user_id: req.user.id,
         title: req.body.title,
 		tags: tags,
