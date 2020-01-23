@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios');
 var url = require('url');
-var bcrypt = require('bcryptjs')
+var bcrypt = require('bcryptjs');
+
+var postsController = require('../controllers/posts');
 
 var config = require('../config/env.js');
 var passport = require('passport');
@@ -10,7 +12,12 @@ var apihelper = require('../helpers/api_url.js');
 
 /* GET home page. */
 function renderUserPage(res, user) {
-	res.render('main/main_page', {user: user});
+
+	postsController.getByTag('random')
+		.then(data => {
+			res.render('main/main_page', {title: 'Página principal', user: user, posts: data});
+		})
+		.catch(error => res.render('error.pug', { error: error }))
 }
 
 router.get('/posts', verificaAutenticao, function(req,res) {
@@ -30,7 +37,7 @@ router.get('/', function(req, res, next) {
 	else
 	{
 		console.log("Not authenticated! Sending to front page");
-		res.render('main/main_page', { title: 'Homepage' });
+		res.redirect('main/main_page', { title: 'Homepage' });
 	}
 });
 
@@ -70,7 +77,12 @@ router.post('/login', passport.authenticate('local', {
 
 
 router.get('/main', function (req, res) {
-	res.render('main/main_page', {title: 'Página principal'});
+	
+})
+
+
+router.post('/post', verificaAutenticao, function (req, res) {
+	
 })
 
 

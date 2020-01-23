@@ -1,0 +1,11 @@
+div.card.mb-0
+    div.card-body
+        img.rounded-circle.border.float-left.mr-3(src="images/no-profile.png", width="50", height="auto")
+        div
+            h5.mb-0 NOME DO PUBLICANTE
+            p.text-secondary= p.user_id
+        hr
+        h3.mb-1= p.title
+        each tag in p.tags
+            button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
+        h5.mt-3 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit cum necessitatibus incidunt, est consequatur quis mollitia repellendus quod assumenda ipsum facilis, dolor nemo rerum provident quasi nam praesentium hic at.
