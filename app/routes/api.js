@@ -65,10 +65,10 @@ router.post('/post', check_token, upload.array('files'), (req, res) => {
         attachments: [],
         comments: [],
     };
-    
-    if(req.files)
+
+    if(req.body.files)
     {
-        for(let i = 0; i < req.files.length; ++i)
+        for(let i = 0; i < req.body.files.length; ++i)
         {
             let current_file = req.files[i];
             let old_path = __dirname + "/../" + current_file.path;
@@ -113,25 +113,81 @@ router.get('/posts', check_token, function(req, res, next)
 {
     if(req.query['tag'])
     {
-        posts.getByTag(req.query.tag)
-        .then(data => {
-            var promises = [];
-            for(let i = 0; i < data.length; i++)
-            {
-                promises.push(users.getById(data[i].user_id));
-            }
-            var new_array = Array.from(data);
-            Promise.all(promises)
-            .then(values => {
-                for(let j = 0; j < values.length; j++)
+        console.dir(req.query.tag)
+        if(req.query.tag instanceof Array)
+        {
+            posts.getByTags(req.query.tag)
+            .then(data => {
+                var promises = [];
+                for(let i = 0; i < data.length; i++)
                 {
-                    new_array[j]['_doc'].poster_name = values[j][0].full_name;
+                    promises.push(users.getById(data[i].user_id));
                 }
-                res.jsonp(new_array);
+                var new_array = Array.from(data);
+                Promise.all(promises)
+                .then(values => {
+                    for(let j = 0; j < values.length; j++)
+                    {
+                        new_array[j]['_doc'].poster_name = values[j][0].full_name;
+                    }
+                    res.jsonp(new_array);
+                })
+                .catch(err => res.status(500).jsonp(err));
             })
             .catch(err => res.status(500).jsonp(err));
-        })
-        .catch(err => res.status(500).jsonp(err));
+            /*
+            var posts_promises = []
+            var tags = req.query['tag'];
+            for(let i = 0; i < tags.length; i++)
+            {
+                posts_promises.push(posts.getByTag(req.query.tag[i]))
+            }
+            Promise.all(posts_promises)
+            .then(datas => {
+                var datas_flat = [].concat.apply([], datas);
+                var promises = [];
+                for(let k = 0; k < datas_flat.length; k++)
+                {
+                    var data = datas_flat[k];
+                    promises.push(users.getById(data.user_id));
+                }
+                
+                var new_array = Array.from(datas_flat);
+                Promise.all(promises)
+                .then(values => {
+                    for(let j = 0; j < values.length; j++)
+                    {
+                        new_array[j]['_doc'].poster_name = values[j][0].full_name;
+                    }
+                    res.jsonp(new_array);
+                })
+                .catch(err => res.status(500).jsonp(err));
+            })
+            .catch(err => res.status(500).jsonp(err));
+            */
+        }
+        else
+        {
+            posts.getByTag(req.query.tag)
+            .then(data => {
+                var promises = [];
+                for(let i = 0; i < data.length; i++)
+                {
+                    promises.push(users.getById(data[i].user_id));
+                }
+                var new_array = Array.from(data);
+                Promise.all(promises)
+                .then(values => {
+                    for(let j = 0; j < values.length; j++)
+                    {
+                        new_array[j]['_doc'].poster_name = values[j][0].full_name;
+                    }
+                    res.jsonp(new_array);
+                })
+                .catch(err => res.status(500).jsonp(err));
+            })
+            .catch(err => res.status(500).jsonp(err));
+        }
     }
     else
     {
