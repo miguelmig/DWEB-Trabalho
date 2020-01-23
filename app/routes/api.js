@@ -70,7 +70,7 @@ router.post('/post', check_token, upload.array('files'), (req, res) => {
     {
         for(let i = 0; i < req.body.files.length; ++i)
         {
-            let current_file = req.files[i];
+            let current_file = req.body.files[i];
             let old_path = __dirname + "/../" + current_file.path;
             let new_path = __dirname + '/../public/ficheiros/' + current_file.originalname;
             

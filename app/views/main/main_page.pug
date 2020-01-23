@@ -3,8 +3,9 @@ extends main_layout
 block content
     include navbar
     div.container-fluid(style="margin-top: 70px")
-        div.row.h-100
+        div.row
             .col-3
+                include user_info
             .col-6
                 include post_form
                 hr
