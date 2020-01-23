@@ -8,24 +8,27 @@ var postsController = require('../controllers/posts');
 
 var config = require('../config/env.js');
 var passport = require('passport');
-var apihelper = require('../helpers/api_url.js');
+var {getAPIURL} = require('../helpers/api_url.js');
 
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
-
 /* GET home page. */
 function renderUserPage(res, user) {
-
-	postsController.getByTag('random')
-		.then(data => {
-			res.render('main/main_page', {title: 'Página principal', user: user, posts: data});
-		})
-		.catch(error => res.render('error.pug', { error: error }))
+	axios.get(getAPIURL('posts?tag=random'))
+	.then(response => {
+		res.render('main/main_page',
+		{
+			title: 'Página principal', 
+			user: user, 
+			posts: response.data
+		});
+	})
+	.catch(err => res.render('error', {error: err}));
 }
 
 router.get('/posts', verificaAutenticao, function(req,res) {
-	axios.get(getAPIURL('api/posts' + url.parse(req.url).query))
+	axios.get(getAPIURL('posts' + url.parse(req.url).query))
 	.then(response => {
 		res.render('posts-page', {posts: response.data});
 	})

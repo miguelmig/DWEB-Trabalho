@@ -58,7 +58,7 @@ router.post('/post', check_token, upload.array('files'), (req, res) => {
     let date = new Date();
     let post = {
         date: date.toISOString(),
-        user_id: req.body.id,
+        user_id: req.body.user_id,
         title: req.body.title,
         tags: req.body.tags,
         content: req.body.content,
@@ -111,11 +111,27 @@ router.get('/post/:postid', check_token, (req, res) => {
 
 router.get('/posts', check_token, function(req, res, next) 
 {
-    console.log(req.query)
     if(req.query['tag'])
     {
         posts.getByTag(req.query.tag)
-        .then(data => res.jsonp(data))
+        .then(data => {
+            var promises = [];
+            for(let i = 0; i < data.length; i++)
+            {
+                promises.push(users.getById(data[i].user_id));
+            }
+            Promise.all(promises)
+            .then(values => {
+                var new_data = Array.from(data);
+                for(let j = 0; j < values.length; j++)
+                {
+                    new_data[j].poster_name = values[j].full_name;
+                }
+                console.log(new_data[0]['poster_name']);
+                res.jsonp(new_data);
+            })
+            .catch(err => res.status(500).jsonp(err));
+        })
         .catch(err => res.status(500).jsonp(err));
     }
     else
