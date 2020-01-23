@@ -60,6 +60,7 @@ module.exports.getByUser = (userId) => {
 module.exports.getByTag = (tag) => {
     return Post
             .find({ tags: tag })
+            .sort('-date')
             .exec()
 }
 
