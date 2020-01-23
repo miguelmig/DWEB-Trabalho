@@ -4,7 +4,7 @@ div.text-center
 div.collapse.mt-2(id="collapsePubForm")
     div.card.mb-0
         div.card-body
-            form(action="/post", method="post")
+            form(action="/post", method="post", enctype="multipart/form-data")
                 div.form-group
                     input.form-control(type="text" name="title" placeholder="Assunto")
                 div.form-group
@@ -15,5 +15,9 @@ div.collapse.mt-2(id="collapsePubForm")
                 <script src="/javascripts/init_tagify.js"></script>
 
                 div.form-group.mb-0
-                    img.ml-2.mt-2(src="images/add-file-icon.png" height="30px")
+                    button.btn.btn-secondary(type="button" data-toggle="modal" data-target="#addFilesModal") Anexos
+
                     input.btn.btn-lg.btn-primary.mb-0.float-right(type="submit" value="Publicar")
+
+include add_files_modal
+
