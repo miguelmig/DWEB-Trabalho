@@ -65,7 +65,7 @@ router.post('/post', check_token, upload.array('files'), (req, res) => {
         attachments: [],
         comments: [],
     };
-
+    
     if(req.files)
     {
         for(let i = 0; i < req.files.length; ++i)
