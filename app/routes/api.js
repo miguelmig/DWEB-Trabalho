@@ -17,6 +17,7 @@ router.get('/user/:userid', check_token, (req, res) => {
     var userid = req.params.userid;
     users.getById(userid)
     .then(data => {
+        console.log(data)
         res.jsonp(data);
     })
     .catch(err => {
@@ -68,6 +69,12 @@ router.post('/post/:idpost/comment', check_token, (req, res) => {
     posts.addComment(req.params.idpost, comment)
     .then(data => res.jsonp(data))
     .catch(err => res.status(500).jsonp(err))
+})
+
+router.get('/posts/:userid', check_token, function (req, res) {
+    posts.getByUser(req.params.userid)
+        .then(data => res.jsonp(data))
+        .catch(err => res.status(500).jsonp(err))
 })
 
 router.post('/post', check_token, upload.array('files'), (req, res) => {

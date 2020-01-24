@@ -1,0 +1,32 @@
+extends main_layout
+
+block content
+	include navbar
+	div.container-fluid(style="margin-top: 70px")
+		div.row
+			.col-3
+			.col-6.mt-4
+				div.card
+					div.container-fluid
+						div.row
+							div.col-4.bg-warning.pt-5(style="text-align: center;")
+								img.rounded-circle.border.mt-4(src="/images/no-profile.png", width="150", height="auto")
+							div.col-8.h-100.p-5
+								p.mb-0.text-muted Nome completo
+								h4 Pedro Rafael Paiva Moura
+								br
+								p.mb-0.text-muted Número de aluno
+								h4 #{user.id}
+								br
+								p.mb-0.text-muted Curso
+								h4 #{user.course}
+				hr
+				
+				if typeof(posts) !== "undefined"
+					h1.text-muted
+						i Publicações
+					each p in posts
+						include post
+						hr
+			.col-3
+			

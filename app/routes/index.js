@@ -106,6 +106,20 @@ router.get('/main', function (req, res) {
 })
 
 
+router.get('/user/:userid', verificaAutenticao, (req, res) => {
+	axios.get(getAPIURL('user/' + req.params.userid))
+		.then(res1 => {
+			var user = res1.data[0];
+			axios.get(getAPIURL('/posts/' + req.params.userid))
+				.then(res2 => {
+					console.log(res2.data)
+					res.render('main/user_page', {user: user, posts: res2.data})
+				})
+				.catch(err => res.render('error', { error: err }))
+		})
+		.catch(err => res.render('error', { error: err }))
+})
+
 router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 	axios.post(getAPIURL('post/' + req.params.idpost + "/comment"), {
 		from: req.user.id,
