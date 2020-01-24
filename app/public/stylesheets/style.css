@@ -27,6 +27,12 @@ body {
   cursor: pointer;
 }
 
-a { 
+a,a:hover,a:active{ 
   color: inherit;
-} 
+
+}
+
+.card:hover{
+  border-radius: 3;
+  border-color: rgb(161, 159, 159);
+}
