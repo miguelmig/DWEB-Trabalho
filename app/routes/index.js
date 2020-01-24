@@ -19,7 +19,8 @@ function getTagsString(tags)
 	var tag_string = ""
 	for(let i = 0; i < tags.length; i++)
 	{
-		tag_string += "&tag=" + tags[i].toLowerCase();
+		//tag_string += "&tag=" + tags[i].toLowerCase();
+		tag_string += "&tag=" + tags[i];
 	}
 	return tag_string
 }

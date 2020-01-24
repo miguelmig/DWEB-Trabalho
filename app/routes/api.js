@@ -134,7 +134,6 @@ router.get('/posts', check_token, function(req, res, next)
 
     if(req.query['tag'])
     {
-        //console.dir(req.query.tag)
         if(req.query.tag instanceof Array)
         {
             posts.getByTags(req.query.tag)
