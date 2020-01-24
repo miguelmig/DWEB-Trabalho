@@ -8,7 +8,7 @@ div.collapse.mt-2(id="collapsePubForm")
                 div.form-group
                     input.form-control(type="text" name="title" placeholder="Assunto" required)
                 div.form-group
-                    textarea.form-control(rows="4" placeholder="Escrever aqui..." name="content" required)
+                    textarea.form-control(rows="4" placeholder="Escrever aqui..." name="content" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' required)
                 
                 div.form-group
                     input.form-control(name='tags' placeholder="Adicionar tags..." required)

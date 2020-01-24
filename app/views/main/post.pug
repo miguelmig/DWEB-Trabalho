@@ -1,6 +1,6 @@
 div.card.mb-0
     div.card-body.clickable(onclick = "location.href = '/post/" + p._id + "/'")
-        h3.mb-1= p.title
+        h3.card-title.mb-1= p.title
         each tag in p.tags
             a(href="/posts/?tag=" + tag)
                 button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
