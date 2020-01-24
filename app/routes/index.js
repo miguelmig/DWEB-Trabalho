@@ -106,7 +106,8 @@ router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 		from: req.user.id,
 		content: req.body.content
 	})
-	.then(data => res.redirect('/post/' + req.params.idpost))
+	//.then(data => res.redirect('/post/' + req.params.idpost))
+	.then(_ => res.redirect('/'))
 	.catch(err => res.render('error', {error: err}))
 })
 
@@ -132,6 +133,9 @@ router.post('/post', verificaAutenticao, upload.array('files'), function (req, r
     .catch(err => res.render('error', {error: err}));
 })
 
+router.get('/file/:filename', verificaAutenticao, function(req,res) {
+	res.download(__dirname + '/../public/ficheiros/' + req.params.filename)
+})
 
 function verificaAutenticao(req, res, next) {
 	if(req.isAuthenticated())
