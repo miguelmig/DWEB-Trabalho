@@ -31,12 +31,12 @@ var socket = io.connect('http://localhost:3000');
     //an event emitted from server
     socket.on('chat message', function (data) {
         var string = '<div class="row message-bubble"><p class="text-muted">' + data.username+'</p><p>'+data.message+'</p></div>';
-        if (data.username.length && data.message.length){
+        /*if (data.username.length && data.message.length){
                         var messageObject = {
                             author:data.username,
                             message: data.message,
                         };
-                    socket.emit('sendMessage',messageObject);}
+                    socket.emit('sendMessage',messageObject);}*/
       $('#messages').append(string);
     });
 

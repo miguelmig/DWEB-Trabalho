@@ -36,7 +36,17 @@ console.log(`Socket connected ${socket.id}`)
     });
 
     socket.on('new_message', function (msg) {
+    	if (msg.username.length && msg.message.length){
+                        var messageObject = {
+                            author:msg.username,
+                            message: msg.message,
+                        };
+               Messages.create(messageObject)
+                .then(dados =>console.log("Saved"))
+                .catch(erro =>res.status(500).jsonp(erro))
+                ;}
          io.emit('chat message', { 'message': msg.message, 'username': msg.username });
+         
     });
     
     socket.on('disconnect', function(){
