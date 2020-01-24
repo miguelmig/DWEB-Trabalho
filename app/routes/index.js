@@ -57,7 +57,7 @@ router.get('/', function(req, res, next) {
 	else
 	{
 		console.log("Not authenticated! Sending to front page");
-		res.redirect('/login');
+		res.render('authentication/index');
 	}
 });
 
@@ -134,7 +134,7 @@ router.post('/post', verificaAutenticao, upload.array('files'), function (req, r
 		content: req.body.content,
 		files: req.files,
     })
-    .then(data => res.redirect('/'))
+    .then(_ => res.redirect('/'))
     .catch(err => res.render('error', {error: err}));
 })
 
