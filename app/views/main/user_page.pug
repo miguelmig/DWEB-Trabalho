@@ -5,21 +5,27 @@ block content
 	div.container-fluid(style="margin-top: 70px")
 		div.row
 			.col-3
+				include user_info
 			.col-6.mt-4
 				div.card
 					div.container-fluid
 						div.row
-							div.col-4.bg-warning.pt-5(style="text-align: center;")
-								img.rounded-circle.border.mt-4(src="/images/no-profile.png", width="150", height="auto")
+							div.col-4.pt-5(style="text-align: center;")
+								img.rounded-circle.border.mt-4.ml-4(src="/images/no-profile.png", width="150", height="auto")
 							div.col-8.h-100.p-5
 								p.mb-0.text-muted Nome completo
 								h4 #{user.full_name}
 								br
 								p.mb-0.text-muted Número de aluno
 								h4 #{user.id}
-								br
 								p.mb-0.text-muted Curso
 								h4 #{user.course}
+								p.mb-0.text-muted Tópicos subscritos
+												
+								each tag in user.subscribed_tags
+									a(href="/posts/?tag=" + tag)
+										button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
+								
 				hr
 				
 				if typeof(posts) !== "undefined"
