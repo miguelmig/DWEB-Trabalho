@@ -57,12 +57,17 @@ router.get('/', function(req, res, next) {
 	else
 	{
 		console.log("Not authenticated! Sending to front page");
-		res.render('/authentication/register', { title: 'Homepage' });
+		res.redirect('/login');
 	}
 });
 
 router.get('/register', function(req,res) {
   	res.render('authentication/register', {title: 'Registar'});
+});
+
+router.get('/logout', function(req,res) {
+	req.session.destroy();
+	res.redirect('/');
 });
 
 router.post('/register', function(req, res) {
