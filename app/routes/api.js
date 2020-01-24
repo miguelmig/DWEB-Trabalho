@@ -131,6 +131,7 @@ router.get('/post/:postid', check_token, (req, res) => {
 
 router.get('/posts', check_token, function(req, res, next) 
 {
+
     if(req.query['tag'])
     {
         //console.dir(req.query.tag)
