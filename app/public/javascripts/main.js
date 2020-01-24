@@ -9,7 +9,7 @@ function apagaComentario(postid, commentid)
         .catch(error => console.log(error));
 }
 
-function updateSubscriptions(userid, tags) {
+function updateSubscriptions(userid) {
 
     event.preventDefault();
     
