@@ -8,3 +8,12 @@ function apagaComentario(postid, commentid)
         })
         .catch(error => console.log(error));
 }
+
+function updateSubscriptions(userid, tags) {
+
+    event.preventDefault();
+    
+    axios.put("/user/" + userid + '/subscribed_tags')
+        .then()
+        .catch(error => console.log(error));
+}

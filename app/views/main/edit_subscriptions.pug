@@ -1,0 +1,13 @@
+div.modal.fade(id="editSubscriptionsModal" tabindex="-1" role="dialog"  aria-hidden="true")
+    div.modal-dialog(role="document")
+        div.modal-content
+            div.modal-header
+                h5.modal-title Editar subscrições
+                button.btn.close(data-dismiss="modal" aria-label="Close")
+                    span(aria-hidden="true") &times;
+            
+            div.modal-body
+                input.form-control(name="tags", value=user.subscribed_tags required)
+                button.btn.btn-primary(onclick="updateSubscriptions('" + user.id +"', '" + tags + "')")
+                        span Atualizar
+                <script src="/javascripts/init_tagify.js"></script>

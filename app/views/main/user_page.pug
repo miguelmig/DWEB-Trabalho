@@ -15,13 +15,19 @@ block content
 							div.col-8.h-100.p-5
 								p.mb-0.text-muted Nome completo
 								h4 #{user.full_name}
-								br
+
 								p.mb-0.text-muted Número de aluno
 								h4 #{user.id}
+
 								p.mb-0.text-muted Curso
 								h4 #{user.course}
-								p.mb-0.text-muted Tópicos subscritos
-												
+
+								if can_edit
+									p.mb-1.text-muted Tópicos subscritos
+										button.btn.btn-xs.btn-secondary.py-0(style="font-size: 0.8em" data-toggle="modal" data-target="#editSubscriptionsModal").ml-2 Editar
+									include edit_subscriptions
+								else
+									p.mb-1.text-muted Tópicos subscritos
 								each tag in user.subscribed_tags
 									a(href="/posts/?tag=" + tag)
 										button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag

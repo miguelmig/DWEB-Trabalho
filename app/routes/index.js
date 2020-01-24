@@ -121,13 +121,20 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 		.catch(err => res.render('error', { error: err }))
 })
 
+router.put('/user/:userid/subscribed_tags', verificaAutenticao, (req, res) => {
+
+	axios.put(getAPIURL("/user/" + req.params.userid + "/subscribed_tags"))
+		.then(response => res.redirect('back'))
+		.catch(err => res.render('error', {error: err}))
+}) 
+
 router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 	axios.post(getAPIURL('post/' + req.params.idpost + "/comment"), {
 		from: req.user.id,
 		content: req.body.content
 	})
 	//.then(data => res.redirect('/post/' + req.params.idpost))
-	.then(_ => res.redirect('/'))
+	.then(_ => res.redirect('back'))
 	.catch(err => res.render('error', {error: err}))
 })
 
