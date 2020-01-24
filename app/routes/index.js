@@ -138,7 +138,7 @@ router.delete('/post/:idpost/comment/:idcomment', verificaAutenticao, (req,res) 
 
 router.get('/post/:idpost', verificaAutenticao, (req, res) => {
 	axios.get(getAPIURL('post/' + req.params.idpost))
-	.then(response => res.render('main/post-page', {p: response.data}))
+	.then(response => res.render('main/post-page', {p: response.data, user: req.user}))
 	.catch(err => res.render('error', {error: err}))
 })
 
