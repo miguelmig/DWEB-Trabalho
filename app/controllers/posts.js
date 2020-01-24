@@ -131,3 +131,9 @@ module.exports.addComment = (postid, comment_info) => {
         "$push": { comments: comment_info }
     }).exec();
 }
+
+module.exports.deleteComment = (postid, commentid) => {
+    return Post.findByIdAndUpdate(postid, {
+        "$pull" : { "comments": {"_id": commentid}}
+    }).exec();
+}
