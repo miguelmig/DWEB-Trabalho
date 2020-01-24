@@ -3,17 +3,17 @@ div.card-body.mb-0
         div.container-fluid
             div.row
                 div.col-1.p-0
-                    img.rounded-circle.border(src="images/no-profile.png", width="38", height="auto")
+                    img.rounded-circle.border(src="/images/no-profile.png", width="38", height="auto")
                 div.col-11.pl-0
                     p.p-2.bg-light.border.rounded 
                         b #{c.from} 
-                        | #{c.content}
+                        span.markdown-content #{c.content}
 
                     
     div.container-fluid
         div.row
             div.col-1.p-0
-                img.rounded-circle.border(src="images/no-profile.png", width="38", height="auto")
+                img.rounded-circle.border(src="/images/no-profile.png", width="38", height="auto")
             div.col-11.p-0
                 form(action="/post/" + p._id + "/comment", method="post")
                     input.form-control(type="text" name="content" placeholder="Escreve um comentário...")

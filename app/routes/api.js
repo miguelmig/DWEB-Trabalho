@@ -125,7 +125,12 @@ router.post('/post', check_token, upload.array('files'), (req, res) => {
 router.get('/post/:postid', check_token, (req, res) => {
     var postid = req.params.postid;
     posts.getById(postid)
-    .then(data => res.jsonp(data))
+    .then(data => {
+        users.getById(data.user_id).then(user_data => {
+            data['_doc'].poster_name = user_data[0].full_name
+            res.jsonp(data)
+        })
+    })
     .catch(err => res.status(500).jsonp(err));
 })
 
