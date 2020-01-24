@@ -162,10 +162,10 @@ router.get('/posts', check_token, function(req, res, next)
                     for(let x = 0; x < new_array.length; x++)
                     {
                         // remove duplicates
-                        if(ids.find(id => id == new_array[x]._id) === undefined)
+                        if(ids.find(id => id.equals(new_array[x]._id)) === undefined)
                         {
                             final_array.push(new_array[x]);
-                            ids.push(new_array[x]["_id"]);
+                            ids.push(new_array[x]._id);
                         }
                     }
 
