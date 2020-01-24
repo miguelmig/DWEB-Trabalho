@@ -1,0 +1,22 @@
+div.card.mb-0
+    div.card-body
+        h3.card-title.mb-1= p.title
+        each tag in p.tags
+            a(href="/posts/?tag=" + tag)
+                button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
+        hr
+        img.rounded-circle.border.float-left.mr-3(src="/images/no-profile.png", width="50", height="auto")
+        div
+            h5.mb-0
+                a(href="/user/" + p.user_id) #{p.poster_name}
+            p.text-secondary= p.user_id
+            p.text-secondary= p.date
+        h5.mt-3.markdown-content #{p.content}
+        if typeof(p.attachments) !== undefined
+            each f in p.attachments
+                form(action="/file/" + f.name, method="get")
+                    button.btn.btn-xs(type="submit" style="font-size: 0.8em").py-0.btn-light.border-secondary.mr-1.float-left
+                        img.ml-0(src="/images/file-icon.png", height="13px")
+                        |  #{f.name}
+    hr.mb-0.mt-0
+    include comment_section
