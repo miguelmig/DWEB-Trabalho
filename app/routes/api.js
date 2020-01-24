@@ -71,6 +71,13 @@ router.post('/post/:idpost/comment', check_token, (req, res) => {
     .catch(err => res.status(500).jsonp(err))
 })
 
+router.delete('/post/:idpost/comment/:idcomment', check_token, (req,res) => {
+
+    posts.deleteComment(req.params.idpost, req.params.idcomment)
+    .then(data => res.jsonp(data))
+    .catch(err => res.status(500).jsonp(err))
+})
+
 router.get('/posts/:userid', check_token, function (req, res) {
     posts.getByUser(req.params.userid)
         .then(data => res.jsonp(data))
