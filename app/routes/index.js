@@ -42,7 +42,7 @@ function renderUserPage(res, user) {
 
 router.get('/posts', verificaAutenticao, function(req,res) {
 
-	axios.get(getAPIURL('posts') + url.parse(req.url).query)
+	axios.get(getAPIURL('posts') + "&" + url.parse(req.url).query)
 	.then(response => {
 		if (req.query.tag instanceof Array) {
 			res.render('main/posts_page', {user: req.user, posts: response.data});
@@ -118,7 +118,10 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 			var user = res1.data[0];
 			axios.get(getAPIURL('/posts/' + req.params.userid))
 				.then(res2 => {
-					console.log(res2.data)
+					res2.data.forEach(element => {
+						element.poster_name = user.full_name
+					});
+
 					res.render('main/user_page', {user: req.user, searched_user: user, posts: res2.data, can_edit: can_edit})
 				})
 				.catch(err => res.render('error', { error: err }))

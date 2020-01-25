@@ -19,6 +19,7 @@ function updateSubscriptions(userid) {
     })
     .then(response => {
         $("#editSubscriptionsModal").modal('toggle')
+        window.location.reload()
     })
     .catch(error => console.log(error));
 }

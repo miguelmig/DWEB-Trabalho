@@ -150,9 +150,9 @@ router.get('/post/:postid', check_token, (req, res) => {
 
 router.get('/posts', check_token, function(req, res, next) 
 {
-
     if(req.query['tag'])
     {
+        
         if(req.query.tag instanceof Array)
         {
             posts.getByTags(req.query.tag)
