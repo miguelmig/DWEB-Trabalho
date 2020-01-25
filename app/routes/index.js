@@ -120,6 +120,7 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 				.then(res2 => {
 					res2.data.forEach(element => {
 						element.poster_name = user.full_name
+						element.poster_pic = user.profile_pic
 					});
 
 					res.render('main/user_page', {user: req.user, searched_user: user, posts: res2.data, can_edit: can_edit})

@@ -5,7 +5,7 @@ div.card.mb-0
             a(href="/posts/?tag=" + tag)
                 button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
         hr
-        img.rounded-circle.border.float-left.mr-3(src="/images/no-profile.png", width="50", height="auto")
+        img.rounded-circle.border.float-left.mr-3(src="/ficheiros/" + p.poster_pic, width="50", height="auto")
         div
             h5.mb-0
                 a(href="/user/" + p.user_id) #{p.poster_name}

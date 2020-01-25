@@ -142,6 +142,7 @@ router.get('/post/:postid', check_token, (req, res) => {
     .then(data => {
         users.getById(data.user_id).then(user_data => {
             data['_doc'].poster_name = user_data[0].full_name
+            data['_doc'].poster_pic = user_data[0].profile_pic
             res.jsonp(data)
         })
     })
@@ -169,6 +170,8 @@ router.get('/posts', check_token, function(req, res, next)
                     for(let j = 0; j < values.length; j++)
                     {
                         new_array[j].poster_name = values[j][0].full_name;
+                        new_array[j].poster_pic = values[j][0].profile_pic;
+                        // todo: ADICIONAR FOTOGRAFIA NOS COMENTARIOS
                     }
                     var ids = []
                     var final_array = [];
@@ -234,6 +237,7 @@ router.get('/posts', check_token, function(req, res, next)
                     for(let j = 0; j < values.length; j++)
                     {
                         new_array[j]['_doc'].poster_name = values[j][0].full_name;
+                        new_array[j]['_doc'].poster_pic = values[j][0].profile_pic;
                     }
                     res.jsonp(new_array);
                 })
@@ -266,6 +270,7 @@ router.get('/posts', check_token, function(req, res, next)
                 for(let j = 0; j < values.length; j++)
                 {
                     new_array[j]['_doc'].poster_name = values[j][0].full_name;
+                    new_array[j]['_doc'].poster_pic = values[j][0].profile_pic;
                 }
                 res.jsonp(new_array);
             })
