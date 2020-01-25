@@ -31,6 +31,7 @@ module.exports.add = (userData) => {
 
 module.exports.updateSubscribeTags = (id, subscribed_tags) => {
     return User.updateOne({id: id},
-        {"$set": {"subscribed_tags": subscribed_tags}})
+        {"$set": {"subscribed_tags": subscribed_tags}},
+        {new: true})
         .exec();
 }

@@ -7,7 +7,7 @@ div.modal.fade(id="editSubscriptionsModal" tabindex="-1" role="dialog"  aria-hid
                     span(aria-hidden="true") &times;
             
             div.modal-body
-                input.form-control(name="tags", value=user.subscribed_tags required)
+                input.form-control(name="tags", id="tag-field", value=user.subscribed_tags required)
                 button.btn.btn-primary(onclick="updateSubscriptions('" + user.id + "')")
                         span Atualizar
                 <script src="/javascripts/init_tagify.js"></script>

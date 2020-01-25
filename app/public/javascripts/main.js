@@ -12,10 +12,13 @@ function apagaComentario(postid, commentid)
 function updateSubscriptions(userid) {
 
     event.preventDefault();
-    
-    axios.put("/user/" + userid + '/subscribed_tags')
-        .then()
-        .catch(error => console.log(error));
+    var tags = $('#tag-field').val();
+    console.log(tags);
+    axios.put("/user/" + userid + '/subscribed_tags', {
+        tags: tags
+    })
+    .then(response => $("#editSubscriptionsModal").modal('toggle'))
+    .catch(error => console.log(error));
 }
 
 $.fn.exists = function () {
