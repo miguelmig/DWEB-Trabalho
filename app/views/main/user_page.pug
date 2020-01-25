@@ -12,6 +12,11 @@ block content
 						div.row
 							div.col-4.pt-5(style="text-align: center;")
 								img.rounded-circle.border.mt-4.ml-4(src="/images/no-profile.png", width="150", height="auto")
+								
+								if can_edit
+									button.btn.btn-xs.btn-secondary.py-0.mt-2.ml-4(style="font-size: 0.8em" data-toggle="modal" data-target="#editProfilePicModal").ml-2 Editar
+								
+								include edit_profile_pic
 							div.col-8.h-100.p-5
 								p.mb-0.text-muted Nome completo
 								h4 #{searched_user.full_name}
