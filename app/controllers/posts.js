@@ -129,7 +129,7 @@ module.exports.getRecent = (start, limit) => {
 module.exports.addComment = (postid, comment_info) => {
     return Post.findByIdAndUpdate(postid, {
         "$push": { comments: comment_info }
-    }).exec();
+    }, {new:true}).exec();
 }
 
 module.exports.deleteComment = (postid, commentid) => {

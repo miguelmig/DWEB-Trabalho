@@ -134,7 +134,7 @@ router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 		content: req.body.content
 	})
 	//.then(data => res.redirect('/post/' + req.params.idpost))
-	.then(_ => res.redirect('back'))
+	.then(response => res.jsonp(response.data))
 	.catch(err => res.render('error', {error: err}))
 })
 
