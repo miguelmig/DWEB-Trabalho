@@ -119,7 +119,7 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 			axios.get(getAPIURL('/posts/' + req.params.userid))
 				.then(res2 => {
 					console.log(res2.data)
-					res.render('main/user_page', {user: user, posts: res2.data, can_edit: can_edit})
+					res.render('main/user_page', {user: req.user, searched_user: user, posts: res2.data, can_edit: can_edit})
 				})
 				.catch(err => res.render('error', { error: err }))
 		})

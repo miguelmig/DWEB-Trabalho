@@ -14,13 +14,13 @@ block content
 								img.rounded-circle.border.mt-4.ml-4(src="/images/no-profile.png", width="150", height="auto")
 							div.col-8.h-100.p-5
 								p.mb-0.text-muted Nome completo
-								h4 #{user.full_name}
+								h4 #{searched_user.full_name}
 
 								p.mb-0.text-muted Número de aluno
-								h4 #{user.id}
+								h4 #{searched_user.id}
 
 								p.mb-0.text-muted Curso
-								h4 #{user.course}
+								h4 #{searched_user.course}
 
 								if can_edit
 									p.mb-1.text-muted Tópicos subscritos
@@ -28,8 +28,8 @@ block content
 									include edit_subscriptions
 								else
 									p.mb-1.text-muted Tópicos subscritos
-								if user.subscribed_tags !== null 
-									each tag in user.subscribed_tags
+								if searched_user.subscribed_tags !== null 
+									each tag in searched_user.subscribed_tags
 										a(href="/posts/?tag=" + tag)
 											button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
 								
