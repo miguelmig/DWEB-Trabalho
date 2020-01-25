@@ -41,9 +41,14 @@ function renderUserPage(res, user) {
 }
 
 router.get('/posts', verificaAutenticao, function(req,res) {
+
 	axios.get(getAPIURL('posts') + url.parse(req.url).query)
 	.then(response => {
-		res.render('posts-page', {posts: response.data});
+		if (req.query.tag instanceof Array) {
+			res.render('main/posts_page', {user: req.user, posts: response.data});
+		} else {
+			res.render('main/posts_page', {user: req.user, posts: response.data, tag: req.query.tag});
+		}
 	})
 	.catch(err => res.render('error', {error: err}));
 });
