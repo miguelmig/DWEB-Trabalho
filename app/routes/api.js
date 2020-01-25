@@ -158,7 +158,7 @@ router.get('/posts', check_token, function(req, res, next)
         {
             posts.getByTags(req.query.tag)
             .then(data => {
-                //console.dir(data);
+                console.dir(data);
                 var promises = [];
                 for(let i = 0; i < data.length; i++)
                 {
@@ -171,7 +171,20 @@ router.get('/posts', check_token, function(req, res, next)
                     {
                         new_array[j].poster_name = values[j][0].full_name;
                         new_array[j].poster_pic = values[j][0].profile_pic;
-                        // todo: ADICIONAR FOTOGRAFIA NOS COMENTARIOS
+                        var new_promises = [];
+                        for(let k = 0; k < new_array[j].comments.length; k++) {
+                            new_promises.push(users.getById(new_array[j].comments[k].from));
+                        }
+                        
+                        var new_comments = Array.from(new_array[j].comments)
+                        Promise.all(new_promises)
+                            .then(values1 => {
+                                for(let h = 0; h < values1.length; h++) {
+                                    new_comments[h].comment_pic = values1[h][0].profile_pic
+                                    console.log(new_comments[h])
+                                }
+                            })
+                            .catch(err => res.status(500).jsonp(err))
                     }
                     var ids = []
                     var final_array = [];
@@ -185,7 +198,7 @@ router.get('/posts', check_token, function(req, res, next)
                             ids.push(new_array[x]._id);
                         }
                     }
-
+                    
                     res.jsonp(final_array);
                 })
                 .catch(err => res.status(500).jsonp(err));
@@ -239,6 +252,7 @@ router.get('/posts', check_token, function(req, res, next)
                         new_array[j]['_doc'].poster_name = values[j][0].full_name;
                         new_array[j]['_doc'].poster_pic = values[j][0].profile_pic;
                     }
+
                     res.jsonp(new_array);
                 })
                 .catch(err => res.status(500).jsonp(err));
@@ -272,6 +286,7 @@ router.get('/posts', check_token, function(req, res, next)
                     new_array[j]['_doc'].poster_name = values[j][0].full_name;
                     new_array[j]['_doc'].poster_pic = values[j][0].profile_pic;
                 }
+
                 res.jsonp(new_array);
             })
             .catch(err => res.status(500).jsonp(err));
