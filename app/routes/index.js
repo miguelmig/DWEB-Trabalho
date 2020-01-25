@@ -127,9 +127,10 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 })
 
 router.put('/user/:userid/subscribed_tags', verificaAutenticao, (req, res) => {
-
-	axios.put(getAPIURL("/user/" + req.params.userid + "/subscribed_tags"))
-		.then(response => res.redirect('back'))
+	var tags = JSON.parse( req.body.tags )
+	tags = tags.map((tag_dict) => tag_dict['value']);
+	axios.put(getAPIURL("/user/" + req.params.userid + "/subscribed_tags"), {tags: tags})
+		.then(response => res.jsonp(response.data))
 		.catch(err => res.render('error', {error: err}))
 }) 
 
@@ -139,7 +140,7 @@ router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 		content: req.body.content
 	})
 	//.then(data => res.redirect('/post/' + req.params.idpost))
-	.then(_ => res.redirect('back'))
+	.then(response => res.jsonp(response.data))
 	.catch(err => res.render('error', {error: err}))
 })
 

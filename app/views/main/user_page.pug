@@ -28,9 +28,10 @@ block content
 									include edit_subscriptions
 								else
 									p.mb-1.text-muted Tópicos subscritos
-								each tag in user.subscribed_tags
-									a(href="/posts/?tag=" + tag)
-										button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
+								if user.subscribed_tags !== null 
+									each tag in user.subscribed_tags
+										a(href="/posts/?tag=" + tag)
+											button.btn.btn-xs(style="font-size: 0.8em").py-0.btn-success.mr-1= tag
 								
 				hr
 				

@@ -20,6 +20,6 @@ div.card-body.mb-0
             div.col-1.p-0
                 img.rounded-circle.border(src="/images/no-profile.png", width="38", height="auto")
             div.col-11.p-0
-                form(action="/post/" + p._id + "/comment", method="post")
+                form(id="add-comment-form-" + p._id, onsubmit="adicionaComentario('"+ p._id + "')")
                     input.form-control(type="text" name="content" placeholder="Escreve um comentário...")
 
