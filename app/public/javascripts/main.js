@@ -17,7 +17,9 @@ function updateSubscriptions(userid) {
     axios.put("/user/" + userid + '/subscribed_tags', {
         tags: tags
     })
-    .then(response => $("#editSubscriptionsModal").modal('toggle'))
+    .then(response => {
+        $("#editSubscriptionsModal").modal('toggle')
+    })
     .catch(error => console.log(error));
 }
 

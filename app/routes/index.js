@@ -130,7 +130,9 @@ router.put('/user/:userid/subscribed_tags', verificaAutenticao, (req, res) => {
 	var tags = JSON.parse( req.body.tags )
 	tags = tags.map((tag_dict) => tag_dict['value']);
 	axios.put(getAPIURL("/user/" + req.params.userid + "/subscribed_tags"), {tags: tags})
-		.then(response => res.jsonp(response.data))
+		.then(response => {
+			res.jsonp(response.data)
+		})
 		.catch(err => res.render('error', {error: err}))
 }) 
 
@@ -183,7 +185,7 @@ function verificaAutenticao(req, res, next) {
 	}
 	else
 	{
-		res.redirect('/login');
+		res.redirect('/');
 	}
 
 }
