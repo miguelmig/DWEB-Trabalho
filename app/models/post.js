@@ -5,7 +5,7 @@ const File = require('./file').schema;
 const Comment = new mongoose.Schema({
     date: { type: Date, required: true },
     content: { type: String, required: true },
-    from: { type: String, required: true }   
+    from: { type: String, required: true }
 });
 
 const PostSchema = new mongoose.Schema({
