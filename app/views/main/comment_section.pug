@@ -4,14 +4,16 @@ div.card-body.mb-0
             div.row
                 div.col-1.p-0
                     img.rounded-circle.border(src="/images/no-profile.png", width="38", height="auto")
-                div.col-11.pl-0
+                div.col-10.pl-0
                     p.p-2.bg-light.border.rounded
-                        b #{c.from} 
+                        a(href="/user/" + c.from)
+                            b #{c.from} 
                         span.markdown-content #{c.content}
-            if c.from === user.id
-                .d-flex.flex-row-reverse.mb-4
-                    button.btn.btn-danger.float-right.d-inline(value="Delete" onclick="apagaComentario('" + p._id +"', '" + c._id + "')")
-                        span Apagar
+                div.col-1
+                    if c.from === user.id
+                        button.btn.close(data-dismiss="modal" aria-label="Close" value="Delete" onclick="apagaComentario('" + p._id +"', '" + c._id + "')")
+                            span(aria-hidden="true") 
+                                h3 &times;
                 
 
                     
