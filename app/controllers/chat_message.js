@@ -1,17 +1,13 @@
 const ChatMessage = require('../models/chat_message')
 
-module.exports.getUserMsgs = (userId) => {
+module.exports.getpreviousMsgs = () => {
     return ChatMessage
-        .find({"$or": [{from: userId}, {to: userId}]})
+        .find()
         .exec();
 }
 
-module.exports.getChats = (userId) => {
+module.exports.create = (msg) => {
     return ChatMessage
-        .aggregate([
-            { "$match": {"$or": [{from: userId}, {to: userId}]}},
-            { "$group": {"_id": "$from"}, "chats": {"$push": "$to"}},
-            { "$project": { "chats" : 1 }},
-        ])
-        .exec();
+        .create(msg)
 }
+
