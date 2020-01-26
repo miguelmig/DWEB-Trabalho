@@ -116,6 +116,13 @@ router.get('/main', function (req, res) {
 	
 })
 
+router.get('/search', verificaAutenticao, function(req,res) {
+	var search_string = req.query['q'];
+	console.log(search_string);
+
+})
+	
+
 
 router.get('/user/:userid', verificaAutenticao, (req, res) => {
 	axios.get(getAPIURL('user/' + req.params.userid))
