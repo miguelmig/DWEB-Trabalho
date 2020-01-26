@@ -62,6 +62,7 @@ function adicionaComentario(postid)
     const json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
     axios.post("/post/" + postid + "/comment", json)
     .then(response => {
+        /*
         const json = response.data;
         const comments = json.comments;
         console.log(comments)
@@ -77,6 +78,8 @@ function adicionaComentario(postid)
             console.log("found new comment, id: " + comment._id);
             //TODO: Create new divs with this comment
         }
+        */
+        window.location.reload();
     })
     .catch(error => console.log(error));
 }
