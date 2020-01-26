@@ -1,6 +1,14 @@
 extends layout
 
 block content
-  h1= error.message
-  h2= error.status
-  pre #{error.stack}
+    .w3-container.w3-section
+        .w3-card-4
+            h3 Ups, were sorry but we seem to be having some trouble with your request
+            .w3-container
+                h4= message
+                h2= error.status
+                pre #{error.stack}
+
+            footer.w3-container
+                p
+                    a(href="/") Homepage

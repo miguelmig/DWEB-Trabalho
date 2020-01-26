@@ -94,7 +94,7 @@ router.post('/register', function(req, res) {
 		subscribed_tags: [req.body.course]
     })
     .then(dados => res.redirect('/'))
-    .catch(err => res.render('error', {error: err}));
+    .catch(err => res.render('error', {error: err, message: "----> the user already exists"}));
 })
 
 router.get('/login', function(req, res) {
