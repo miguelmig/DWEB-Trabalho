@@ -35,3 +35,11 @@ module.exports.updateSubscribeTags = (id, subscribed_tags) => {
         {new: true})
         .exec();
 }
+
+module.exports.updateProfilePic = (id, profile_pic) => {
+    return User.updateOne(
+        {id: id},
+        {"$set": { "profile_pic": profile_pic}},
+        {new: true})
+        .exec();
+}

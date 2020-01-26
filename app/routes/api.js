@@ -58,6 +58,13 @@ router.put('/user/:userid/subscribed_tags', check_token, (req, res) => {
     .catch(err => res.status(500).jsonp(err));
 })
 
+router.put('/user/:userid/profile_pic', check_token, (req,res) => {
+    var userid = req.params.userid;
+    users.updateProfilePic(userid, req.body.profile_pic)
+        .then(data => res.jsonp(data))
+        .catch(err => res.status(500).jsonp(err));
+})
+
 router.post('/post/:idpost/comment', check_token, (req, res) => {
     let date = new Date();
     let comment = {

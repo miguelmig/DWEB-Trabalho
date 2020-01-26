@@ -146,6 +146,16 @@ router.put('/user/:userid/subscribed_tags', verificaAutenticao, (req, res) => {
 		.catch(err => res.render('error', {error: err}))
 }) 
 
+router.put('/user/:userid/profile_pic', verificaAutenticao, (req,res) => {
+	console.dir(req.body)
+	var new_profile_pic = req.body.profile_pic
+	//axios.put(getAPIURL("/user/" + req.params.userid + "/profile_pic"), //{profile_pic: new_profile_pic})
+	//	.then(response => {
+	//		res.jsonp(response.data)
+	//	})
+	//	.catch(err => res.render('error', {error: err}))
+})
+
 router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 	axios.post(getAPIURL('post/' + req.params.idpost + "/comment"), {
 		from: req.user.id,
