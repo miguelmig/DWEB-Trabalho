@@ -100,11 +100,26 @@ router.put('/user/:userid/subscribed_tags', check_token, (req, res) => {
     .catch(err => res.status(500).jsonp(err));
 })
 
-router.put('/user/:userid/profile_pic', check_token, (req,res) => {
+router.put('/user/:userid/profile_pic', check_token, upload.single('profile_pic'), (req,res) => {
     var userid = req.params.userid;
-    users.updateProfilePic(userid, req.body.profile_pic)
+
+    if(req.body.profile_pic)
+    {
+        let profile_pic = req.body.profile_pic
+        let old_path = __dirname + "/../" + profile_pic.path;
+        let new_path = __dirname + '/../public/ficheiros/' + profile_pic.filename;
+        
+        fs.rename(old_path, new_path, err => {
+            if(err)
+            {
+                throw err;
+            }
+        });
+        users.updateProfilePic(userid, profile_pic.filename)
         .then(data => res.jsonp(data))
         .catch(err => res.status(500).jsonp(err));
+    }
+
 })
 
 router.post('/post/:idpost/comment', check_token, (req, res) => {
@@ -166,7 +181,7 @@ router.post('/post', check_token, upload.array('files'), (req, res) => {
         {
             let current_file = req.body.files[i];
             let old_path = __dirname + "/../" + current_file.path;
-            let new_path = __dirname + '/../public/ficheiros/' + current_file.originalname;
+            let new_path = __dirname + '/../public/ficheiros/' + current_file.filename;
             
             fs.rename(old_path, new_path, err => {
                 if(err)
@@ -176,7 +191,7 @@ router.post('/post', check_token, upload.array('files'), (req, res) => {
             });
             
             post.attachments.push(new Ficheiro({
-                name: current_file.originalname,
+                name: current_file.filename,
                 mimetype: current_file.mimetype,
                 size: current_file.size
             }));

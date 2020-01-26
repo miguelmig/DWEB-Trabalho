@@ -33,18 +33,18 @@ function updateProfilePic(userid) {
     const formEntries = formData.entries();
     var json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})))
 
-    console.log(json.profile_pic.type)
+    //console.log(json.profile_pic.type)
+    //console.dir(json)
     axios.put("/user/" + userid + "/profile_pic", json, {
         header: {
             'Content-Type': json.profile_pic.type,
         },
-        params: json.profile_pic
     })
-        .then(response => {
-            $("#editProfilePicModal").modal('toggle')
-            window.location.reload()
-        })
-        .catch(error => console.log(error));
+    .then(response => {
+        $("#editProfilePicModal").modal('toggle')
+        window.location.reload()
+    })
+    .catch(error => console.log(error));
 }
 
 $.fn.exists = function () {

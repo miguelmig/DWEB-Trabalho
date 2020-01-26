@@ -7,7 +7,7 @@ div.modal.fade(id="editProfilePicModal" tabindex="-1" role="dialog"  aria-hidden
                     span(aria-hidden="true") &times;
             
             div.modal-body
-                form(id="update-profile-pic", enctype="multipart/form-data" ,onsubmit="updateProfilePic('" + user.id + "');")
+                form(action="/user/profile_pic", method="post", enctype="multipart/form-data")
                     br
                     input(type="file" id="profile-pic-field" name="profile_pic" accept="image/*")
                     br

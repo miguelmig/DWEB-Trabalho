@@ -138,24 +138,30 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 		.catch(err => res.render('error', { error: err }))
 })
 
+router.get('/user/', verificaAutenticao, (req, res) => {
+	res.redirect('/user/' + req.user.id);
+})
+
 router.put('/user/:userid/subscribed_tags', verificaAutenticao, (req, res) => {
 	var tags = JSON.parse( req.body.tags )
 	tags = tags.map((tag_dict) => tag_dict['value']);
-	axios.put(getAPIURL("/user/" + req.params.userid + "/subscribed_tags"), {tags: tags})
+	axios.put(getAPIURL("/user/" + req.user.id + "/subscribed_tags"), {tags: tags})
 		.then(response => {
 			res.jsonp(response.data)
 		})
 		.catch(err => res.render('error', {error: err}))
 }) 
 
-router.put('/user/:userid/profile_pic', verificaAutenticao, (req,res) => {
-	console.dir(req.body)
-	var new_profile_pic = req.body.profile_pic
-	//axios.put(getAPIURL("/user/" + req.params.userid + "/profile_pic"), //{profile_pic: new_profile_pic})
-	//	.then(response => {
-	//		res.jsonp(response.data)
-	//	})
-	//	.catch(err => res.render('error', {error: err}))
+router.post('/user/profile_pic', verificaAutenticao, upload.single('profile_pic'), (req,res) => {
+	console.dir(req.file)
+	var new_profile_pic = req.file
+	axios.put(getAPIURL("/user/" + req.user.id + "/profile_pic"), 
+		{ profile_pic: new_profile_pic }
+	)
+	.then(response => {
+		res.redirect('/user/' + req.user.id)
+	})
+	.catch(err => res.render('error', {error: err}))
 })
 
 router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
