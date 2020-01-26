@@ -40,7 +40,8 @@ function renderUserPage(res, user) {
 	.catch(err => res.render('error', {error: err}));
 }
 
-router.get('/chat', function(req, res, next) {
+router.get('/chat', verificaAutenticao, function(req, res, next) {
+
     
   res.render('chat', { title: 'Chat Room' });
 });
