@@ -47,7 +47,14 @@ router.post('/user/', check_token, (req, res) => {
 router.get('/user/:userid/posts', check_token, (req, res) => {
     var userid = req.params.userid;
     posts.getByUser(userid)
-    .then(data => res.jsonp(data))
+    .then(data => {
+        var new_array = Array.from(data);
+        new_array.map(post => {
+            post['poster'] = post.poster[0];
+            post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+        })
+        res.jsonp(new_array);
+    })
     .catch(err => res.status(500).jsonp(err));
 })
 
@@ -87,7 +94,14 @@ router.delete('/post/:idpost/comment/:idcomment', check_token, (req,res) => {
 
 router.get('/posts/:userid', check_token, function (req, res) {
     posts.getByUser(req.params.userid)
-        .then(data => res.jsonp(data))
+        .then(data => {
+            var new_array = Array.from(data);
+            new_array.map(post => {
+                post['poster'] = post.poster[0];
+                post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+            })
+            res.jsonp(new_array);
+        })
         .catch(err => res.status(500).jsonp(err))
 })
 
@@ -147,11 +161,12 @@ router.get('/post/:postid', check_token, (req, res) => {
     var postid = req.params.postid;
     posts.getById(postid)
     .then(data => {
-        users.getById(data.user_id).then(user_data => {
-            data['_doc'].poster_name = user_data[0].full_name
-            data['_doc'].poster_pic = user_data[0].profile_pic
-            res.jsonp(data)
+        var new_array = Array.from(data);
+        new_array.map(post => {
+            post['poster'] = post.poster[0];
+            post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
         })
+        res.jsonp(new_array[0]);
     })
     .catch(err => res.status(500).jsonp(err));
 })
@@ -165,7 +180,14 @@ router.get('/posts', check_token, function(req, res, next)
         {
             posts.getByTags(req.query.tag)
             .then(data => {
-                console.dir(data);
+                //console.dir(data);
+                var new_array = Array.from(data);
+                new_array.map(post => {
+                    post['poster'] = post.poster[0];
+                    post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+                })
+                res.jsonp(new_array);
+                /*
                 var promises = [];
                 for(let i = 0; i < data.length; i++)
                 {
@@ -209,60 +231,20 @@ router.get('/posts', check_token, function(req, res, next)
                     res.jsonp(final_array);
                 })
                 .catch(err => res.status(500).jsonp(err));
+                */
             })
             .catch(err => res.status(500).jsonp(err));
-            /*
-            var posts_promises = []
-            var tags = req.query['tag'];
-            for(let i = 0; i < tags.length; i++)
-            {
-                posts_promises.push(posts.getByTag(req.query.tag[i]))
-            }
-            Promise.all(posts_promises)
-            .then(datas => {
-                var datas_flat = [].concat.apply([], datas);
-                var promises = [];
-                for(let k = 0; k < datas_flat.length; k++)
-                {
-                    var data = datas_flat[k];
-                    promises.push(users.getById(data.user_id));
-                }
-                
-                var new_array = Array.from(datas_flat);
-                Promise.all(promises)
-                .then(values => {
-                    for(let j = 0; j < values.length; j++)
-                    {
-                        new_array[j]['_doc'].poster_name = values[j][0].full_name;
-                    }
-                    res.jsonp(new_array);
-                })
-                .catch(err => res.status(500).jsonp(err));
-            })
-            .catch(err => res.status(500).jsonp(err));
-            */
         }
         else
         {
             posts.getByTag(req.query.tag)
             .then(data => {
-                var promises = [];
-                for(let i = 0; i < data.length; i++)
-                {
-                    promises.push(users.getById(data[i].user_id));
-                }
                 var new_array = Array.from(data);
-                Promise.all(promises)
-                .then(values => {
-                    for(let j = 0; j < values.length; j++)
-                    {
-                        new_array[j]['_doc'].poster_name = values[j][0].full_name;
-                        new_array[j]['_doc'].poster_pic = values[j][0].profile_pic;
-                    }
-
-                    res.jsonp(new_array);
+                new_array.map(post => {
+                    post['poster'] = post.poster[0];
+                    post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
                 })
-                .catch(err => res.status(500).jsonp(err));
+                res.jsonp(new_array);
             })
             .catch(err => res.status(500).jsonp(err));
         }
@@ -280,23 +262,12 @@ router.get('/posts', check_token, function(req, res, next)
 
         posts.getRecent(start, limit)
         .then(data => {
-            var promises = [];
-            for(let i = 0; i < data.length; i++)
-            {
-                promises.push(users.getById(data[i].user_id));
-            }
             var new_array = Array.from(data);
-            Promise.all(promises)
-            .then(values => {
-                for(let j = 0; j < values.length; j++)
-                {
-                    new_array[j]['_doc'].poster_name = values[j][0].full_name;
-                    new_array[j]['_doc'].poster_pic = values[j][0].profile_pic;
-                }
-
-                res.jsonp(new_array);
+            new_array.map(post => {
+                post['poster'] = post.poster[0];
+                post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
             })
-            .catch(err => res.status(500).jsonp(err));
+            res.jsonp(new_array);
         })
         .catch(err => res.jsonp(err));
     }

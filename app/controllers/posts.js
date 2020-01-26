@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-
+const mongoose = require('mongoose')
 /**
  * Adds a new post to the collection
  * 
@@ -36,9 +36,43 @@ module.exports.delete = (postId) => {
  * @param {string} postId
  */
 module.exports.getById = (postId) => {
-    return Post
-            .findById(postId)
-            .exec();
+    return Post.aggregate([
+        { "$match": { "_id" : mongoose.Types.ObjectId(postId) }},
+
+        { "$lookup": {
+            "from": "users",
+            "localField": "user_id",
+            "foreignField": "id",
+            "as": "poster"}}, 
+        
+        { "$unset": "poster.password"},
+
+        { "$unwind": "$comments" },
+            
+        { "$lookup": {
+            "from": "users",
+            "localField": "comments.from",
+            "foreignField": "id",
+            "as": "comments.poster"}}, 
+
+        { "$unset": "comments.poster.password"},
+
+        { "$group": {
+            "_id": "$_id",
+            "date": { "$first": "$date" },
+            "user_id": { "$first": "$user_id" },
+            "title": { "$first": "$title" },
+            "content": { "$first": "$content" },
+            "attachments": { "$first": "$attachments" },
+            "comments": { "$push": {
+                "comment": "$comments"
+            }},
+            "tags": { "$first": "$tags" },
+            "poster": {"$first": "$poster"}
+        }},
+
+        { "$sort": { "date": -1 } }
+    ]).exec();
 }
 
 /**
@@ -47,10 +81,43 @@ module.exports.getById = (postId) => {
  * @param {string} userId
  */
 module.exports.getByUser = (userId) => {
-    return Post
-            .find({ user_id: userId })
-            .sort('-date')
-            .exec()
+    return Post.aggregate([
+        { "$match": { "user_id" : userId }},
+
+        { "$lookup": {
+            "from": "users",
+            "localField": "user_id",
+            "foreignField": "id",
+            "as": "poster"}}, 
+        
+        { "$unset": "poster.password"},
+
+        { "$unwind": "$comments" },
+            
+        { "$lookup": {
+            "from": "users",
+            "localField": "comments.from",
+            "foreignField": "id",
+            "as": "comments.poster"}}, 
+
+        { "$unset": "comments.poster.password"},
+
+        { "$group": {
+            "_id": "$_id",
+            "date": { "$first": "$date" },
+            "user_id": { "$first": "$user_id" },
+            "title": { "$first": "$title" },
+            "content": { "$first": "$content" },
+            "attachments": { "$first": "$attachments" },
+            "comments": { "$push": {
+                "comment": "$comments"
+            }},
+            "tags": { "$first": "$tags" },
+            "poster": {"$first": "$poster"}
+        }},
+
+        { "$sort": { "date": -1 } }
+    ]).exec()
 }
 
 /**
@@ -58,25 +125,57 @@ module.exports.getByUser = (userId) => {
  * 
  * @param {string} tag
  */
+
 module.exports.getByTag = (tag) => {
-    return Post
-            .find({ tags: tag })
-            .sort('-date')
-            .exec()
+    return Post.aggregate([
+        { "$addFields": { "tags_all": "$tags" }},
+        { "$unwind": "$tags"},
+        { "$match": { "tags" : tag }},
+
+        { "$unset" : [ "tags" ] },
+
+        { "$lookup": {
+            "from": "users",
+            "localField": "user_id",
+            "foreignField": "id",
+            "as": "poster"}}, 
+        
+        { "$unset": "poster.password"},
+
+        { "$unwind": "$comments" },
+            
+        { "$lookup": {
+            "from": "users",
+            "localField": "comments.from",
+            "foreignField": "id",
+            "as": "comments.poster"}}, 
+
+        { "$unset": "comments.poster.password"},
+        
+        { "$group": {
+            "_id": "$_id",
+            "date": { "$first": "$date" },
+            "user_id": { "$first": "$user_id" },
+            "title": { "$first": "$title" },
+            "content": { "$first": "$content" },
+            "attachments": { "$first": "$attachments" },
+            "comments": { "$push": {
+                "comment": "$comments"
+            }},
+            "tags": { "$first": "$tags_all" },
+            "poster": {"$first": "$poster"}
+        }},
+        
+        { "$sort": { "date": -1 } }
+    ])
+    .exec()
 }
 
 module.exports.getByTags = (tags) => {
     return Post
         .aggregate([
-            {
-                "$addFields": 
-                {
-                    "tags_all": "$tags"
-                }
-            },
-            {
-                "$unwind": "$tags"
-            },
+            { "$addFields": { "tags_all": "$tags" }},
+            { "$unwind": "$tags" },
             {
                 "$match": 
                 {
@@ -89,41 +188,129 @@ module.exports.getByTags = (tags) => {
                     }
                 }
             },
-            {
-                "$unset" : [
-                    "tags",
-                ]
-            },
-            {
-                "$project": 
-                {
-                    "tags": "$tags_all",
-                    "date": 1,
-                    "user_id":1,
-                    "title":1,
-                    "content": 1,
-                    "attachments": 1,
-                    "comments": 1
 
-                },
-            },
-            {
-                "$sort":
-                {
-                    "date": -1
-                }
-            }
+            { "$unset" : [ "tags" ] },
+
+            { "$lookup": {
+                "from": "users",
+                "localField": "user_id",
+                "foreignField": "id",
+                "as": "poster"}}, 
+            
+            { "$unset": "poster.password"},
+            
+            { "$unwind": "$comments" },
+            
+            { "$lookup": {
+                "from": "users",
+                "localField": "comments.from",
+                "foreignField": "id",
+                "as": "comments.poster"}}, 
+
+            { "$unset": "comments.poster.password"},
+            
+            { "$group": {
+                "_id": "$_id",
+                "date": { "$first": "$date" },
+                "user_id": { "$first": "$user_id" },
+                "title": { "$first": "$title" },
+                "content": { "$first": "$content" },
+                "attachments": { "$first": "$attachments" },
+                "comments": { "$push": {
+                    "comment": "$comments"
+                }},
+                "tags": { "$first": "$tags_all" },
+                "poster": {"$first": "$poster"}
+            }},
+
+            { "$sort": { "date": -1 } }
         ])
         .exec();
-} 
+}
+/*
+module.exports.getByTag = (tag) => {
+    return Post.
+        find({tags: tag})
+        .sort({date: -1})
+        .exec()
+}
+*/
+
+/*
+module.exports.getByTags = (tags) => {
+    return Post.aggregate([
+            { "$addFields": { "tags_all": "$tags" }},
+            { "$unwind": "$tags" },
+            {
+                "$match": 
+                {
+                    "$expr":
+                    {
+                        "$in": [
+                            "$tags",
+                            tags
+                        ]
+                    }
+                }
+            },
+
+            { "$unset" : [ "tags" ] },
+
+            { "$project": {
+                "tags": "$tags_all",
+                "date": 1,
+                "user_id":1,
+                "title":1,
+                "content": 1,
+                "attachments": 1,
+                "comments": 1
+            }},
+                
+            {  "$sort": { "date": -1 }}         
+    ]).exec()
+}
+*/
 
 module.exports.getRecent = (start, limit) => {
-    return Post
-            .find()
-            .sort('-date')
-            .skip(start)
-            .limit(limit)
-            .exec();
+    return Post.aggregate([
+        { "$sort": { "date": -1 } },
+        { "$skip": start },
+        { "$limit": limit },
+        { "$lookup": {
+            "from": "users",
+            "localField": "user_id",
+            "foreignField": "id",
+            "as": "poster" 
+        }},
+        { "$unset": "poster.password" },
+
+        
+        { "$unwind": "$comments" },
+        
+        { "$lookup": {
+            "from": "users",
+            "localField": "comments.from",
+            "foreignField": "id",
+            "as": "comments.poster"}}, 
+
+        { "$unset": "comments.poster.password"},
+
+        { "$group": {
+            "_id": "$_id",
+            "date": { "$first": "$date" },
+            "user_id": { "$first": "$user_id" },
+            "title": { "$first": "$title" },
+            "content": { "$first": "$content" },
+            "attachments": { "$first": "$attachments" },
+            "comments": { "$push": {
+                "comment": "$comments"
+            }},
+            "tags": { "$first": "$tags_all" },
+            "poster": {"$first": "$poster"}
+        }},
+
+
+    ]).exec();
 }
 
 module.exports.addComment = (postid, comment_info) => {
