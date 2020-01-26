@@ -3,3 +3,4 @@ app/uploads/
 app/ficheiros/
 app/sessions/
 package-lock.json
+app/public/ficheiros/
