@@ -1,0 +1,84 @@
+% Setup -------------------------------
+
+\documentclass[a4paper]{report}
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+% Encoding
+%--------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%--------------------------------------
+
+% Portuguese-specific commands
+%--------------------------------------
+\usepackage[portuguese]{babel}
+%--------------------------------------
+
+% Hyphenation rules and references
+%--------------------------------------
+\usepackage{hyphenat}
+\usepackage{hyperref}
+%--------------------------------------
+
+% Capa do relatório
+
+\title{
+   Desenvolvimento de Aplicações WEB
+    \\ \Large{\textbf{Trabalho Prático}}
+    \\ -
+    \\ Mestrado em Engenharia Informática
+    \\ \large{Universidade do Minho}
+    \\ Relatório
+}
+\author{
+    \begin{tabular}{ll}
+        \textbf{Grupo nº}
+        \\\hline
+        PG & Miguel
+        \\
+        PG41094 & Pedro Rafael Paiva Moura
+        \\
+        A80499  & Moisés Manuel Borba Roriz Ramires
+    \end{tabular}
+}
+
+\date{\today}
+
+\begin{document}
+
+\begin{titlepage}
+    \maketitle
+\end{titlepage}
+
+% Resumo
+
+\begin{abstract}
+    Neste trabalho prático foi nos pedido que desenvolvêssemos uma aplicação web que iria servir como  rede social ,de alunos para alunos, onde estes pudessem partilhar materiais, discutir datas, combinar eventos...
+\end{abstract}
+
+% Índice
+
+\tableofcontents
+
+% Introdução
+
+\chapter{Introdução} \label{intro}
+\large{
+    Neste projeto foi-nos proposto a realização de uma rede social com algumas funcionalidades integradas,em seguida destacadas:
+    \begin{enumerate}
+        \item Gestão de utilizadores com autenticação. Para aceder á página é necessário que um utilizador esteja autencticado;
+        \item Publicações por parte dos utilizadores. Um utilizador deve poder publicar na página desde que estaja autenticado;
+        
+    \end{enumerate}
+    Para além desta funcionalidade foram acrescentadas mais algumas á aplicação.
+}
+
+
+
+\end{document}
