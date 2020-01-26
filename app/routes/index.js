@@ -20,7 +20,7 @@ function getTagsString(tags)
 	for(let i = 0; i < tags.length; i++)
 	{
 		//tag_string += "&tag=" + tags[i].toLowerCase();
-		tag_string += "&tag=" + tags[i];
+		tag_string += "&tag=" + tags[i].toLowerCase();
 	}
 	return tag_string
 }
@@ -84,7 +84,7 @@ router.get('/logout', function(req,res) {
 	res.redirect('/');
 });
 
-router.post('/register', function(req, res) {
+router.post('/register', verificaAutenticao, function(req, res) {
 	var hash = bcrypt.hashSync(req.body.password, 10);
     axios.post(getAPIURL('user/'), {
 		full_name: req.body.full_name,
@@ -97,7 +97,7 @@ router.post('/register', function(req, res) {
     .catch(err => res.render('error', {error: err, message: "----> the user already exists"}));
 })
 
-router.get('/login', function(req, res) {
+router.get('/login', verificaAutenticao, function(req, res) {
   	res.render('authentication/login', {title: 'Conetar'});
 });
 
@@ -141,7 +141,7 @@ router.get('/user/', verificaAutenticao, (req, res) => {
 
 router.put('/user/:userid/subscribed_tags', verificaAutenticao, (req, res) => {
 	var tags = JSON.parse( req.body.tags )
-	tags = tags.map((tag_dict) => tag_dict['value']);
+	tags = tags.map((tag_dict) => tag_dict['value'].toLowerCase());
 	axios.put(getAPIURL("/user/" + req.user.id + "/subscribed_tags"), {tags: tags})
 		.then(response => {
 			res.jsonp(response.data)
@@ -187,7 +187,7 @@ router.post('/post', verificaAutenticao, upload.array('files'), function (req, r
 	console.log("Post front-page: ");
 	console.dir(req.body);
 	var tags = JSON.parse( req.body.tags )
-	tags = tags.map((tag_dict) => tag_dict['value']);
+	tags = tags.map((tag_dict) => tag_dict['value'].toLowerCase());
 	axios.post(getAPIURL('post/'), {
 		user_id: req.user.id,
         title: req.body.title,
