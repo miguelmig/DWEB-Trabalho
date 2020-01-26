@@ -47,7 +47,10 @@ module.exports.getById = (postId) => {
         
         { "$unset": "poster.password"},
 
-        { "$unwind": "$comments" },
+        { "$unwind": { 
+            "path":"$comments",
+            "preserveNullAndEmptyArrays": true
+        }},
             
         { "$lookup": {
             "from": "users",
@@ -65,7 +68,7 @@ module.exports.getById = (postId) => {
             "content": { "$first": "$content" },
             "attachments": { "$first": "$attachments" },
             "comments": { "$push": {
-                "comment": "$comments"
+                "comment": "$comments",
             }},
             "tags": { "$first": "$tags" },
             "poster": {"$first": "$poster"}
@@ -92,7 +95,10 @@ module.exports.getByUser = (userId) => {
         
         { "$unset": "poster.password"},
 
-        { "$unwind": "$comments" },
+        { "$unwind": { 
+            "path":"$comments",
+            "preserveNullAndEmptyArrays": true
+        }},
             
         { "$lookup": {
             "from": "users",
@@ -129,7 +135,11 @@ module.exports.getByUser = (userId) => {
 module.exports.getByTag = (tag) => {
     return Post.aggregate([
         { "$addFields": { "tags_all": "$tags" }},
-        { "$unwind": "$tags"},
+        { "$unwind": {
+            "path": "$tags",
+            "preserveNullAndEmptyArrays": true
+        }},
+
         { "$match": { "tags" : tag }},
 
         { "$unset" : [ "tags" ] },
@@ -142,7 +152,11 @@ module.exports.getByTag = (tag) => {
         
         { "$unset": "poster.password"},
 
-        { "$unwind": "$comments" },
+
+        { "$unwind": { 
+            "path":"$comments",
+            "preserveNullAndEmptyArrays": true
+        }},
             
         { "$lookup": {
             "from": "users",
@@ -175,7 +189,11 @@ module.exports.getByTags = (tags) => {
     return Post
         .aggregate([
             { "$addFields": { "tags_all": "$tags" }},
-            { "$unwind": "$tags" },
+            { "$unwind": {
+                "path": "$tags",
+                "preserveNullAndEmptyArrays": true
+            }},
+
             {
                 "$match": 
                 {
@@ -199,7 +217,10 @@ module.exports.getByTags = (tags) => {
             
             { "$unset": "poster.password"},
             
-            { "$unwind": "$comments" },
+            { "$unwind": { 
+                "path":"$comments",
+                "preserveNullAndEmptyArrays": true
+            }},
             
             { "$lookup": {
                 "from": "users",
@@ -285,7 +306,10 @@ module.exports.getRecent = (start, limit) => {
         { "$unset": "poster.password" },
 
         
-        { "$unwind": "$comments" },
+        { "$unwind": { 
+            "path":"$comments",
+            "preserveNullAndEmptyArrays": true
+        }},
         
         { "$lookup": {
             "from": "users",

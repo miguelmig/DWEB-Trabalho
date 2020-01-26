@@ -11,6 +11,19 @@ var upload = multer({dest: 'uploads/'});
 const Ficheiro = require('../models/file');
 const fs = require('fs');
 
+Array.prototype.removeIf = function(callback) {
+    var i = 0;
+    while (i < this.length) {
+        if (callback(this[i], i)) {
+            this.splice(i, 1);
+        }
+        else {
+            ++i;
+        }
+    }
+};
+
+
 
 // User Api
 router.get('/user/:userid', check_token, (req, res) => {
@@ -44,6 +57,24 @@ router.post('/user/', check_token, (req, res) => {
     })
 })
 
+function removeIdenticalComments(commentArray)
+{
+    var ids = []
+    var final_array = [];
+
+    for(let x = 0; x < commentArray.length; x++)
+    {
+        // remove duplicates
+        if(ids.find(id => id.equals(commentArray[x].comment._id)) === undefined)
+        {
+            final_array.push(commentArray[x]);
+            ids.push(commentArray[x].comment._id);
+        }
+    }
+
+    return final_array;
+}
+
 router.get('/user/:userid/posts', check_token, (req, res) => {
     var userid = req.params.userid;
     posts.getByUser(userid)
@@ -51,7 +82,11 @@ router.get('/user/:userid/posts', check_token, (req, res) => {
         var new_array = Array.from(data);
         new_array.map(post => {
             post['poster'] = post.poster[0];
+            post.comments.removeIf( el => {
+                return el.comment._id === undefined
+            });
             post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+            post['comments'] = removeIdenticalComments(post.comments)
         })
         res.jsonp(new_array);
     })
@@ -98,7 +133,11 @@ router.get('/posts/:userid', check_token, function (req, res) {
             var new_array = Array.from(data);
             new_array.map(post => {
                 post['poster'] = post.poster[0];
+                post.comments.removeIf( el => {
+                    return el.comment._id === undefined
+                });
                 post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+                post['comments'] = removeIdenticalComments(post.comments)
             })
             res.jsonp(new_array);
         })
@@ -164,12 +203,17 @@ router.get('/post/:postid', check_token, (req, res) => {
         var new_array = Array.from(data);
         new_array.map(post => {
             post['poster'] = post.poster[0];
+            post.comments.removeIf( el => {
+                return el.comment._id === undefined
+            });
             post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+            post['comments'] = removeIdenticalComments(post.comments)
         })
         res.jsonp(new_array[0]);
     })
     .catch(err => res.status(500).jsonp(err));
 })
+
 
 router.get('/posts', check_token, function(req, res, next) 
 {
@@ -184,7 +228,11 @@ router.get('/posts', check_token, function(req, res, next)
                 var new_array = Array.from(data);
                 new_array.map(post => {
                     post['poster'] = post.poster[0];
+                    post.comments.removeIf( el => {
+                        return el.comment._id === undefined
+                    });
                     post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+                    post['comments'] = removeIdenticalComments(post.comments)
                 })
                 res.jsonp(new_array);
                 /*
@@ -239,10 +287,19 @@ router.get('/posts', check_token, function(req, res, next)
         {
             posts.getByTag(req.query.tag)
             .then(data => {
+                console.log("Getting posts by tag: " + req.query.tag)
+                console.dir(data)
                 var new_array = Array.from(data);
                 new_array.map(post => {
                     post['poster'] = post.poster[0];
-                    post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+                    post.comments.removeIf( el => {
+                        return el.comment._id === undefined
+                    });
+                    post['comments'].map(comment_dict => {
+                        comment_dict.comment.poster = comment_dict.comment.poster[0];
+                    })
+                    post['comments'] = removeIdenticalComments(post.comments)
+                    
                 })
                 res.jsonp(new_array);
             })
@@ -265,7 +322,11 @@ router.get('/posts', check_token, function(req, res, next)
             var new_array = Array.from(data);
             new_array.map(post => {
                 post['poster'] = post.poster[0];
+                post.comments.removeIf( el => {
+                    return el.comment._id === undefined
+                });
                 post['comments'].map(comment_dict => comment_dict.comment.poster = comment_dict.comment.poster[0])
+                post['comments'] = removeIdenticalComments(post.comments)
             })
             res.jsonp(new_array);
         })

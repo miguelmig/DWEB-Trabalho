@@ -1,7 +1,7 @@
 div.card-body.mb-0
     each c in p.comments
         - var comment = c['comment']
-        div.container-fluid(id=c._id)
+        div.container-fluid(id=comment._id)
             div.row
                 div.col-1.p-0
                     img.rounded-circle.border(src="/ficheiros/" + comment.poster.profile_pic, width="38", height="auto")
@@ -11,8 +11,8 @@ div.card-body.mb-0
                             b #{comment.from}
                         span.markdown-content #{comment.content}
                 div.col-1
-                    if c.from === user.id
-                        button.btn.close(data-dismiss="modal" aria-label="Close" value="Delete" onclick="apagaComentario('" + p._id +"', '" + c._id + "')")
+                    if comment.from === user.id
+                        button.btn.close(data-dismiss="modal" aria-label="Close" value="Delete" onclick="apagaComentario('" + p._id +"', '" + comment._id + "')")
                             span(aria-hidden="true") 
                                 h3 &times;
                 
