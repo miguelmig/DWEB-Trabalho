@@ -3,7 +3,7 @@ div.container-fluid
     div.col.mt-5
       div.card.mb-0
         div.card-body.clickable(style="text-align: center;", onclick= "location.href = '/user/" + user.id + "'")
-          img.rounded-circle.border.mb-2(src="/ficheiros/" + user.profile_pic, width="100", height="auto")
+          img.rounded-circle.border.mb-2(src="/ficheiros/" + user.profile_pic, width="100", height="100")
           h4 #{user.full_name}
           p.text-secondary #{user.id} &bull; #{user.course}
 
