@@ -76,6 +76,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function(req,res) {
+	if(req.isAuthenticated())
+	{
+		res.redirect('/');
+	}
+
   	res.render('authentication/register', {title: 'Registar'});
 });
 
@@ -84,7 +89,7 @@ router.get('/logout', function(req,res) {
 	res.redirect('/');
 });
 
-router.post('/register', verificaAutenticao, function(req, res) {
+router.post('/register', function(req, res) {
 	var hash = bcrypt.hashSync(req.body.password, 10);
     axios.post(getAPIURL('user/'), {
 		full_name: req.body.full_name,
@@ -97,7 +102,12 @@ router.post('/register', verificaAutenticao, function(req, res) {
     .catch(err => res.render('error', {error: err, message: "----> the user already exists"}));
 })
 
-router.get('/login', verificaAutenticao, function(req, res) {
+router.get('/login', function(req, res) {
+	if(req.isAuthenticated())
+	{
+		res.redirect('/');
+	}
+
   	res.render('authentication/login', {title: 'Conetar'});
 });
 
