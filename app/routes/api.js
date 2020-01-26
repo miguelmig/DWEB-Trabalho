@@ -359,8 +359,7 @@ function check_token(req, res, next)
     }
     else
     {
-        //res.status(401).jsonp({"error": "Didn't send JWT token for authentication in API."});
-        next();
+        res.status(401).jsonp({"error": "Didn't send JWT token for authentication in API."});
     }
 }
 
