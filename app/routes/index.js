@@ -59,7 +59,7 @@ router.get('/posts', verificaAutenticao, function(req,res) {
 			res.render('main/posts_page', {user: req.user, posts: response.data, tag: req.query.tag});
 		}
 	})
-	.catch(err => res.render('error', {error: err}));
+	.catch(err => res.render('error', {error: err, message:"----> there was a problem getting the posts"}));
 });
 
 router.get('/', function(req, res, next) {
@@ -130,9 +130,9 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 				.then(res2 => {
 					res.render('main/user_page', {user: req.user, searched_user: user, posts: res2.data, can_edit: can_edit})
 				})
-				.catch(err => res.render('error', { error: err }))
+				.catch(err => res.render('error', { error: err, message: "----> there was a problem getting your posts" }))
 		})
-		.catch(err => res.render('error', { error: err }))
+		.catch(err => res.render('error', { error: err, message: "----> there was a problem getting the user" }))
 })
 
 router.get('/user/', verificaAutenticao, (req, res) => {
@@ -158,7 +158,7 @@ router.post('/user/profile_pic', verificaAutenticao, upload.single('profile_pic'
 	.then(response => {
 		res.redirect('/user/' + req.user.id)
 	})
-	.catch(err => res.render('error', {error: err}))
+	.catch(err => res.render('error', {error: err, message:"----> there was a problem setting the profile picture "}))
 })
 
 router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
@@ -174,13 +174,13 @@ router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 router.delete('/post/:idpost/comment/:idcomment', verificaAutenticao, (req,res) => {
 	axios.delete(getAPIURL('post/' + req.params.idpost + "/comment/" + req.params.idcomment))
 	.then(response => res.jsonp(response.data))
-	.catch(err => res.render('error', {error: err}))
+	.catch(err => res.render('error', {error: err, message: `----> we couldnt delete your comment ${req.params.idcomment} from the post with the id: ${req.params.idpost}`}))
 })
 
 router.get('/post/:idpost', verificaAutenticao, (req, res) => {
 	axios.get(getAPIURL('post/' + req.params.idpost))
 	.then(response => res.render('main/post-page', {p: response.data, user: req.user}))
-	.catch(err => res.render('error', {error: err}))
+	.catch(err => res.render('error', {error: err, message: `----> Cant find the post with the id: ${req.params.idpost}`}))
 })
 
 router.post('/post', verificaAutenticao, upload.array('files'), function (req, res) {
