@@ -321,6 +321,25 @@ router.get('/posts', check_token, function(req, res, next)
             .catch(err => res.status(500).jsonp(err));
         }
     }
+    else if(req.query.q) {
+        posts.getBySearch(req.query.q)
+            .then(data => {
+                var new_array = Array.from(data);
+                new_array.map(post => {
+                    post['poster'] = post.poster[0];
+                    post.comments.removeIf( el => {
+                        return el.comment._id === undefined
+                    });
+                    post['comments'].map(comment_dict => {
+                        comment_dict.comment.poster = comment_dict.comment.poster[0];
+                    })
+                    post['comments'] = removeIdenticalComments(post.comments)
+                    
+                })
+                res.jsonp(new_array)
+            })
+            .catch(err => res.status(500).jsonp(err));
+    }
     else
     {
         var start = 0;

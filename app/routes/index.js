@@ -51,7 +51,11 @@ router.get('/posts', verificaAutenticao, function(req,res) {
 	.then(response => {
 		if (req.query.tag instanceof Array) {
 			res.render('main/posts_page', {user: req.user, posts: response.data});
-		} else {
+		} else if(req.query.q) {
+			res.render('main/posts_page', {user: req.user, posts: response.data,
+			searched: req.query.q});
+		}
+		else {
 			res.render('main/posts_page', {user: req.user, posts: response.data, tag: req.query.tag});
 		}
 	})
@@ -113,12 +117,6 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/main', function (req, res) {
 	
-})
-
-router.get('/search', verificaAutenticao, function(req,res) {
-	var search_string = req.query['q'];
-	console.log(search_string);
-
 })
 	
 

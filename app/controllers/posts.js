@@ -248,6 +248,71 @@ module.exports.getByTags = (tags) => {
         ])
         .exec();
 }
+
+
+module.exports.getBySearch = (search) => {
+    var regex = search
+
+    return Post
+        .aggregate([
+            {
+                "$lookup": {
+                    "from": "users",
+                    "localField": "user_id",
+                    "foreignField": "id",
+                    "as": "poster"
+                }
+            },
+            {
+                "$unwind": "$comments",
+            },
+            {
+                "$lookup": {
+                    "from": "users",
+                    "localField": "comments.from",
+                    "foreignField": "id",
+                    "as": "comments.poster"
+                }
+            },
+            {
+                "$group": {
+                    "_id": "$_id",
+                    "date": { "$first": "$date" },
+                    "user_id": { "$first": "$user_id" },
+                    "title": { "$first": "$title" },
+                    "tags": { "$first": "$tags" },
+                    "content": { "$first": "$content" },
+                    "attachments": { "$first": "$attachments" },
+                    "comments": { "$push": {
+                        "comment": "$comments"
+                    }},
+                    "poster": {"$first": "$poster"}
+                }
+            },
+            {
+                "$match": {
+                    "$or": [
+                        { "title": { "$regex": search, "$options": "$i" } },
+                        { "content": { "$regex": search, "$options": "$i" } },
+                        { "comments.comment.content": { "$regex": search, "$options": "$i" } }
+                    ]
+                }
+            }
+        ])
+        .exec();
+
+
+}
+/*
+{
+                "$match": {
+                    "$or": [
+                        { "title": { "$regex": search, "$options": "$i" } },
+                        { "content": { "$regex": search, "$options": "$i" } }
+                    ]
+                }
+            },
+*/
 /*
 module.exports.getByTag = (tag) => {
     return Post.

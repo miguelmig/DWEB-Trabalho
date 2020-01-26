@@ -9,8 +9,11 @@ block content
             .col-6
                 br
                 if tag
-                    i 
+                    i
                         h4.text-secondary Publicações com o tópico: #{tag}
+                if searched
+                    i
+                        h4.text-secondary Pesquisa: '#{searched}'
                 if typeof(posts) !== "undefined"
                     each p in posts
                         include post
