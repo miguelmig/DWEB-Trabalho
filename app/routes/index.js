@@ -39,6 +39,7 @@ function renderUserPage(res, user) {
 	})
 	.catch(err => res.render('error', {error: err}));
 }
+
 router.get('/chat', function(req, res, next) {
     
   res.render('chat', { title: 'Chat Room' });
@@ -120,7 +121,7 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 		.then(res1 => {
 			var can_edit = req.user.id === req.params.userid
 			var user = res1.data[0];
-			axios.get(getAPIURL('/posts/' + req.params.userid))
+			axios.get(getAPIURL('posts/' + req.params.userid))
 				.then(res2 => {
 					res2.data.forEach(element => {
 						element.poster_name = user.full_name

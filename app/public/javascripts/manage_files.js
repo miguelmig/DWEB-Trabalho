@@ -1,5 +1,4 @@
 $(function () {
-    console.log("entrei")
     var cont = 1;
     $("#plus1").click(e => {
         e.preventDefault()

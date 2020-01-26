@@ -11,6 +11,7 @@ function apagaComentario(postid, commentid)
 
 function updateSubscriptions(userid) {
 
+    console.log("ola")
     event.preventDefault();
     var tags = $('#tag-field').val();
     console.log(tags);
@@ -22,6 +23,11 @@ function updateSubscriptions(userid) {
         window.location.reload()
     })
     .catch(error => console.log(error));
+}
+
+function updateProfilePic(userid) {
+    
+    console.log("ola")
 }
 
 $.fn.exists = function () {

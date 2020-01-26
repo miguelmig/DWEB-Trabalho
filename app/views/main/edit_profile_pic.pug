@@ -5,3 +5,11 @@ div.modal.fade(id="editProfilePicModal" tabindex="-1" role="dialog"  aria-hidden
                 h5.modal-title Editar foto de perfil
                 button.btn.close(data-dismiss="modal" aria-label="Close")
                     span(aria-hidden="true") &times;
+            
+            div.modal-body
+                br
+                input(type="file" name="profile_pic" id="profile-pic-field" accept="image/*")
+                br
+
+                input.btn.btn-primary(type="button", onclick="updateProfilePic(" + searched_user.id + ");",  value="Adicionar")
+                
