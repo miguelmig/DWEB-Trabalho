@@ -42,7 +42,6 @@ function renderUserPage(res, user) {
 
 router.get('/chat', verificaAutenticao, function(req, res, next) {
 
-    
   res.render('chat', { title: 'Chat Room' });
 });
 
