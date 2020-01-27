@@ -74,7 +74,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
+app.use(cookieParser('O meu segredo'));
 app.use(session({
   genid: req => {
     //console.log("Dentro do middleware da sessão...");
@@ -83,7 +83,10 @@ app.use(session({
   store: new FileStore(),
   secret: 'O meu segredo',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());

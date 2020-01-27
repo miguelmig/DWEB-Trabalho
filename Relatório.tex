@@ -1,0 +1,86 @@
+% Setup -------------------------------
+
+\documentclass[a4paper]{report}
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+% Encoding
+%--------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%--------------------------------------
+
+% Portuguese-specific commands
+%--------------------------------------
+\usepackage[portuguese]{babel}
+%--------------------------------------
+
+% Hyphenation rules and references
+%--------------------------------------
+\usepackage{hyphenat}
+\usepackage{hyperref}
+%--------------------------------------
+
+% Capa do relatório
+
+\title{
+   Desenvolvimento de Aplicações WEB
+    \\ \Large{\textbf{Trabalho Prático}}
+    \\ -
+    \\ Mestrado em Engenharia Informática
+    \\ \large{Universidade do Minho}
+    \\ Relatório
+}
+\author{
+    \begin{tabular}{ll}
+        \textbf{Grupo nº}
+        \\\hline
+        PG & Miguel
+        \\
+        PG41094 & Pedro Rafael Paiva Moura
+        \\
+        A80499  & Moisés Manuel Borba Roriz Ramires
+    \end{tabular}
+}
+
+\date{\today}
+
+\begin{document}
+
+\begin{titlepage}
+    \maketitle
+\end{titlepage}
+
+% Resumo
+
+\begin{abstract}
+    No âmbito da cadeira Desenvolvimento de aplicações WEB, do ano letivo 2019/2020, foi-nos proposto como trabalho prático que desenvolvêssemos uma aplicação web que iria servir como  rede social de alunos para alunos, onde estes pudessem partilhar materiais, discutir datas, combinar eventos... . Para tal irão ser utilizadas as ferramentas e técnicas utilizadas/desenvolvidas durante o decorrer do semestre.
+\end{abstract}
+
+% Índice
+
+\tableofcontents
+
+% Introdução
+
+\chapter{Introdução} \label{intro}
+\large{
+    Neste projeto foi-nos proposto a realização de uma rede social com algumas funcionalidades integradas,em seguida destacadas:
+    \begin{enumerate}
+        \item Gestão de utilizadores com autenticação. Para aceder á página é necessário que um utilizador esteja autencticado;
+        \item Publicações por parte dos utilizadores. Um utilizador deve poder publicar na página desde que estaja autenticado;
+        
+    \end{enumerate}
+    Para além desta funcionalidade foram acrescentadas mais algumas à aplicação, como comentários sobre publicações, uma pagina do perfil do aluno,um aluno poder seguir tags, uma publicação poder ter ficheior anexados um chat geral, entre outras.
+}
+
+\chapter{Autenticação e acesso à aplicação}
+    Tal como referido anteriormente, é necessário utilizar um método para que os alunos possam aceder à aplicação, e confirmar que um aluno não registado( ou que não tenha feito log in) não tenha acesso as diversas funcionalidades do programa.
+    Para tal foram utilizado métodos como passport, sessions e jwtokens, e para verificação de que "estrangeiros" não tenham acesso á app foi criada uma função que Verifica a autnticação, caso o aluno não se encontre autenticado  é remetido para a paginal inicial.
+
+\end{document}
