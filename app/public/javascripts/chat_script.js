@@ -4,31 +4,32 @@
  */
 
 var socket = io.connect('http://localhost:3000');
+
     //var username = Math.random().toString(36).substr(2,8); 
     var username = sessionStorage.getItem("username");
     //console.log("username on socket: " + username);
     socket.emit('join', { username: username });
-    
+
     socket.on('user joined', function (data) {
         $(".js-userjoined").html(data.username + ' Joined chat room');
         console.log(data.users);
-         $.each(data.users, function(index, user) { 
-              console.log(user);
-             $(".js-usersinchat").append('<span id ='+user+'>&nbsp;&nbsp;<strong>'+user+'</strong></span>');
-         });
-     });
-     
-     socket.on('user disconnected', function (data) {
+            $.each(data.users, function(index, user) { 
+                console.log(user);
+                $(".js-usersinchat").append('<span id ='+user+'>&nbsp;&nbsp;<strong>'+user+'</strong></span>');
+            });
+        });
+        
+        socket.on('user disconnected', function (data) {
         $("#"+data.username).remove();
-     });
-     
+        });
+        
 
-       socket.on('previousMessage', function(messages){
+        socket.on('previousMessage', function(messages){
                     for(message of messages){
                         $('#messages').append('<div class="row message-bubble"><p class="text-muted">'+message.author+'</p><p>'+ message.message+' </p> </div>');
                     }
             });
-   
+
 
     //an event emitted from server
     socket.on('chat message', function (data) {
@@ -39,10 +40,10 @@ var socket = io.connect('http://localhost:3000');
                             message: data.message,
                         };
                     socket.emit('sendMessage',messageObject);}*/
-      $('#messages').append(string);
+        $('#messages').append(string);
     });
 
- 
+
 
     $(function () {
         var timeout;
@@ -51,21 +52,21 @@ var socket = io.connect('http://localhost:3000');
             typing = false;
             socket.emit("typing", { message: '', username: '' });
         }
-       $("#sendmessage").on('click', function () {
-         var message = $("#txtmessage").val();
-         $("#txtmessage").val('');
-         $('.typing').html("");
-         socket.emit('new_message', { message: message, username: username });
-       }); 
+        $("#sendmessage").on('click', function () {
+            var message = $("#txtmessage").val();
+            $("#txtmessage").val('');
+            $('.typing').html("");
+            socket.emit('new_message', { message: message, username: username });
+        }); 
 
-       $('#txtmessage').keyup(function () {
-           console.log('happening');
-           typing = true;
-           socket.emit('typing', { message: 'typing...', username: username});
-           clearTimeout(timeout);
-           timeout = setTimeout(timeoutFunction, 2000);
-       });
-   });
+        $('#txtmessage').keyup(function () {
+            console.log('happening');
+            typing = true;
+            socket.emit('typing', { message: 'typing...', username: username});
+            clearTimeout(timeout);
+            timeout = setTimeout(timeoutFunction, 2000);
+        });
+    });
 
     socket.on('typing', function (data) {
         if (data.username && data.message) {
@@ -75,10 +76,10 @@ var socket = io.connect('http://localhost:3000');
         }
     });
 
-var typing = false;
-var timeout = undefined;
+    var typing = false;
+    var timeout = undefined;
 
-function timeoutFunction(){
-  typing = false;
-  socket.emit(noLongerTypingMessage);
-}
+    function timeoutFunction(){
+      typing = false;
+      socket.emit(noLongerTypingMessage);
+    }

@@ -9,7 +9,7 @@ var io       = socket_io();
 var socketio = {};
 socketio.io  = io;
 var users = [];
- io.on('connection', function(socket){
+io.on('connection', function(socket){
     
     console.log('A user connected');
     console.log(`Socket connected ${socket.id}`)
@@ -24,7 +24,8 @@ var users = [];
                 .then(dados =>console.log("Saved"))
                 .catch(erro =>res.status(500).jsonp(erro))
         });
-    socket.on('join', function (user){
+
+    socket.on('join', function (user) {
        socket.username = user.username;
        users.push(socket.username);
        io.emit('user joined', { 'username': user.username, users:users });
@@ -55,6 +56,6 @@ var users = [];
         io.emit('user disconnected', { 'username': socket.username });
     });
      
- });
+});
  
 module.exports = socketio;
