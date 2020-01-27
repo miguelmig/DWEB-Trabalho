@@ -1,10 +1,14 @@
 nav.navbar.navbar-s4s.bg-white.fixed-top.navbar-expand-lg
-    ul.navbar-nav.mr-auto.mt-2.mt-lg-0
-        a.ml-4(href="/")
-            img.navbar-brand(src="/images/s4slogo.png", width="60", height="70")
+    a.ml-4(href="/")
+        img.navbar-brand(src="/images/s4slogo.png", width="60", height="70")
 
-        form(action='/posts').form-inline.my-2.my-lg-0
-            input.form-control.float-left(type="search" placeholder="Pesquisar" aria-label="Search" name="q" required)
+    form(action='/posts').form-inline.my-2.my-lg-0
+        input.form-control.float-left(type="search" placeholder="Pesquisar" aria-label="Search" name="q" required)
+    
+    ul.navbar-nav.mr-auto.mt-lg-0.ml-3
+        li.nav-item
+            a.btn(href="/posts") Recentes
+
     form(action="/logout", method="get")
         input.btn.btn-primary.mr-sm-2(type="Submit" value="Terminar sessão")
 

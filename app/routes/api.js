@@ -316,6 +316,7 @@ router.get('/posts', check_token, function(req, res, next)
                     post['comments'] = removeIdenticalComments(post.comments)
                     
                 })
+                
                 res.jsonp(new_array);
             })
             .catch(err => res.status(500).jsonp(err));

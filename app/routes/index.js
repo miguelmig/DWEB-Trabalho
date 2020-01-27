@@ -49,14 +49,13 @@ router.get('/posts', verificaAutenticao, function(req,res) {
 
 	axios.get(getAPIURL('posts') + "&" + url.parse(req.url).query)
 	.then(response => {
-		if (req.query.tag instanceof Array) {
+		if (req.query.tag) {
 			res.render('main/posts_page', {user: req.user, posts: response.data});
 		} else if(req.query.q) {
 			res.render('main/posts_page', {user: req.user, posts: response.data,
 			searched: req.query.q});
-		}
-		else {
-			res.render('main/posts_page', {user: req.user, posts: response.data, tag: req.query.tag});
+		} else {
+			res.render('main/posts_page', {user: req.user, posts: response.data})
 		}
 	})
 	.catch(err => res.render('error', {error: err, message:"----> there was a problem getting the posts"}));
@@ -215,6 +214,9 @@ router.post('/post', verificaAutenticao, upload.array('files'), function (req, r
     .catch(err => res.render('error', {error: err}));
 })
 
+router.get('/all', verificaAutenticao, function (req, res) {
+	axios.get(getAPIURL(posts()))
+})
 router.get('/file/:filename', verificaAutenticao, function(req,res) {
 	res.download(__dirname + '/../public/ficheiros/' + req.params.filename)
 })

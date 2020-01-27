@@ -362,7 +362,6 @@ module.exports.getByTags = (tags) => {
 
 module.exports.getRecent = (start, limit) => {
     return Post.aggregate([
-        { "$sort": { "date": -1 } },
         { "$skip": start },
         { "$limit": limit },
         { "$lookup": {
@@ -397,9 +396,10 @@ module.exports.getRecent = (start, limit) => {
             "comments": { "$push": {
                 "comment": "$comments"
             }},
-            "tags": { "$first": "$tags_all" },
+            "tags": { "$first": "$tags" },
             "poster": {"$first": "$poster"}
         }},
+        { "$sort": { "date": -1 } }
 
 
     ]).exec();
