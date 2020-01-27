@@ -1,9 +1,9 @@
 extends layout2
 
 block content
-  .container
-   .row 
-     h1 Chat Group
+  include main/navbar
+
+  .container(style="margin-top: 85px")
    .row
     .panel.panel-default
       .panel-heading #{title}

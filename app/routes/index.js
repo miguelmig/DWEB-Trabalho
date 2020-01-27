@@ -43,7 +43,7 @@ function renderUserPage(res, user) {
 
 router.get('/chat', verificaAutenticao, function(req, res, next) {
 
-  res.render('chat', { title: 'Chat Room' });
+  res.render('main/chat', { title: 'Chat Room' });
 });
 
 router.get('/posts', verificaAutenticao, function(req,res) {
