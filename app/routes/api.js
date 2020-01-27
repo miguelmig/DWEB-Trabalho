@@ -313,10 +313,9 @@ router.get('/posts', check_token, function(req, res, next)
                     post['comments'].map(comment_dict => {
                         comment_dict.comment.poster = comment_dict.comment.poster[0];
                     })
-                    post['comments'] = removeIdenticalComments(post.comments)
-                    
+                    post['comments'] = removeIdenticalComments(post.comments)   
                 })
-                
+
                 res.jsonp(new_array);
             })
             .catch(err => res.status(500).jsonp(err));
