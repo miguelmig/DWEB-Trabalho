@@ -162,7 +162,7 @@ router.put('/user/:userid/subscribed_tags', verificaAutenticao, (req, res) => {
 		.then(response => {
 			res.jsonp(response.data)
 		})
-		.catch(err => res.render('error', {error: err}))
+		.catch(err => res.render('error', {error: err, message: "----> there was a problem with the tags"}))
 }) 
 
 router.post('/user/profile_pic', verificaAutenticao, upload.single('profile_pic'), (req,res) => {
