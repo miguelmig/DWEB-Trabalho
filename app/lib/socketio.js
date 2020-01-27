@@ -18,12 +18,7 @@ io.on('connection', function(socket){
         .then(dados =>socket.emit('previousMessage', dados))
         .catch(erro =>res.status(500).jsonp(erro)) 
         
-        socket.on('sendMessage', data => {
-            console.log(data);
-            Messages.create(data)
-                .then(dados =>console.log("Saved"))
-                .catch(erro =>res.status(500).jsonp(erro))
-        });
+        
 
     socket.on('join', function (user) {
        socket.username = user.username;
