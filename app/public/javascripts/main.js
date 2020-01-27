@@ -83,3 +83,13 @@ function adicionaComentario(postid)
     })
     .catch(error => console.log(error));
 }
+
+function guardarLogin()
+{
+    var formElement = document.getElementById('login-form');
+    const formData = new FormData(formElement);
+    const formEntries = formData.entries();
+    const json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
+    console.log(json['username'])
+    sessionStorage.setItem("username", json['username'])
+}

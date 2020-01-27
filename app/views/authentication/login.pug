@@ -1,7 +1,7 @@
 extends authentication_layout
 
 block content
-    form(action="/login", method="post").form-signin
+    form(action="/login", method="post" id="login-form" onsubmit="guardarLogin()").form-signin
         div.text-center.mb-4
             img.mb-4(src="images/s4slogo.png" width="200" height="200")
             h1.h3.mb-3.font-weight-normal Iniciar sessão
