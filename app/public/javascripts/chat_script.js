@@ -4,7 +4,9 @@
  */
 
 var socket = io.connect('http://localhost:3000');
-    var username = Math.random().toString(36).substr(2,8); 
+    //var username = Math.random().toString(36).substr(2,8); 
+    var username = sessionStorage.getItem("username");
+    console.log("username on socket: " + username);
     socket.emit('join', { username: username });
     
     socket.on('user joined', function (data) {
