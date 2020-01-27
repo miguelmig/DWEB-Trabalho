@@ -99,7 +99,13 @@ router.post('/register', function(req, res) {
 		subscribed_tags: [req.body.course]
     })
     .then(dados => res.redirect('/'))
-    .catch(err => res.render('error', {error: err, message: "----> the user already exists"}));
+    .catch(err => {	console.log("cusro = " + req.body.course)
+ 		if(req.body.course === "")
+ 			m = "----> you need to select a course"
+ 		else
+ 			m ="----> the user already exists"
+    	res.render('error', {error: err, message:m })
+    });
 })
 
 router.get('/login', function(req, res) {
