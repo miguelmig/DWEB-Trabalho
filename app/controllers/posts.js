@@ -263,8 +263,11 @@ module.exports.getBySearch = (search) => {
                     "as": "poster"
                 }
             },
-            {
-                "$unwind": "$comments",
+            { 
+                "$unwind": { 
+                "path":"$comments",
+                "preserveNullAndEmptyArrays": true
+                }
             },
             {
                 "$lookup": {
@@ -289,15 +292,15 @@ module.exports.getBySearch = (search) => {
                     "poster": {"$first": "$poster"}
                 }
             },
-            {
-                "$match": {
-                    "$or": [
-                        { "title": { "$regex": search, "$options": "$i" } },
-                        { "content": { "$regex": search, "$options": "$i" } },
-                        { "comments.comment.content": { "$regex": search, "$options": "$i" } }
-                    ]
-                }
-            }
+            //{
+            //    "$match": {
+            //        "$or": [
+            //            { "title": { "$regex": search, "$options": "$i" } },
+            //            { "content": { "$regex": search, "$options": "$i" } },
+            //            { "comments.comment.content": { "$regex": search, //"$options": "$i" } }
+            //        ]
+            //    }
+            //}
         ])
         .exec();
 
