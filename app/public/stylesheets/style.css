@@ -32,6 +32,10 @@ a,a:hover,a:active{
 
 }
 
+.markdown-content a, a:active {
+  color: #0f6a9e !important;
+}
+
 .card:hover{
   border-radius: 3;
   border-color: rgb(161, 159, 159);
