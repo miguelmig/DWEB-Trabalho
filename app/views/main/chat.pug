@@ -3,10 +3,20 @@ extends main_layout
 block content
   include navbar
 
-  div.container-fluid(style="margin-top: 70px")
-    div.row.pl-4.pt-4.pb-0
-      h2.ml-5.mb-0 Chat Room
-    hr
-    div.row
-      div.col
-
+  .container-fluid(style="margin-top: 50px; height: 90%").p-5
+   .row.w-100
+     h1 Chat Room
+   .row.w-100.h-100
+    .card.w-100.h-100
+      .card-header #{title}
+        .js-userjoined
+        .js-usersinchat Users in Chat: 
+        .typing
+      .card-body
+        .container#messages
+          .row.message-bubble
+      .card-footer
+        .input-group
+          input#txtmessage.form-control(type='text')
+          span.input-group-btn
+            button#sendmessage.btn.btn-primary.btn-default(type='button') Send

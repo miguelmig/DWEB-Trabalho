@@ -5,14 +5,13 @@ var url = require('url');
 var bcrypt = require('bcryptjs');
 
 
-var postsController = require('../controllers/posts');
-
 var config = require('../config/env.js');
 var passport = require('passport');
 var {getAPIURL} = require('../helpers/api_url.js');
 
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
+
 
 /* GET home page. */
 function getTagsString(tags)
