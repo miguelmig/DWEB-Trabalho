@@ -11,6 +11,8 @@ var upload = multer({dest: 'uploads/'});
 const Ficheiro = require('../models/file');
 const fs = require('fs');
 
+var verifyJWTApiToken = require('../helpers/jwt_helper.js').verifyJWTApiToken;
+
 Array.prototype.removeIf = function(callback) {
     var i = 0;
     while (i < this.length) {
@@ -356,12 +358,12 @@ router.get('/posts', check_token, function(req, res, next)
 
 function check_token(req, res, next)
 {
-    if(req.query['token'])
+    if(req.query['token'] && verifyJWTApiToken(req.query['token']))
     {
         next();
     }
     else
-    {
+    {   
         res.status(401).jsonp({"error": "Didn't send JWT token for authentication in API."});
     }
 }

@@ -83,7 +83,7 @@ router.get('/register', function(req,res) {
   	res.render('authentication/register', {title: 'Registar'});
 });
 
-router.get('/logout', function(req,res) {
+router.get('/logout', verificaAutenticao, function(req,res) {
 	req.session.destroy();
 	res.redirect('/');
 });
@@ -128,13 +128,6 @@ router.post('/login', passport.authenticate('local', {
 			res.redirect('/');
 	}
 );
-
-
-router.get('/main', function (req, res) {
-	
-})
-	
-
 
 router.get('/user/:userid', verificaAutenticao, (req, res) => {
 	axios.get(getAPIURL('user/' + req.params.userid))
@@ -214,9 +207,7 @@ router.post('/post', verificaAutenticao, upload.array('files'), function (req, r
     .catch(err => res.render('error', {error: err}));
 })
 
-router.get('/all', verificaAutenticao, function (req, res) {
-	axios.get(getAPIURL(posts()))
-})
+
 router.get('/file/:filename', verificaAutenticao, function(req,res) {
 	res.download(__dirname + '/../public/ficheiros/' + req.params.filename)
 })

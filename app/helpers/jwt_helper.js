@@ -30,4 +30,18 @@ function getPrivateKey()
     return private_key;
 }
 
+function verifyJWTToken(token)
+{
+    try
+    {
+        payload = jwt.verify(token, "segredo");
+        return true;
+    }
+    catch
+    {
+        return false;
+    }
+}
+
 module.exports.getJWTApiToken = getJWTApiToken;
+module.exports.verifyJWTApiToken = verifyJWTToken;
