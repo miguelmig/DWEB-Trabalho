@@ -11,7 +11,7 @@ div.card.mb-0
                 a(href="/user/" + p.user_id) #{p.poster.full_name}
             p.text-secondary= p.user_id
             p.text-secondary= p.date
-        h5.mt-3.markdown-content #{p.content}
+        p.mt-3.markdown-content(style="font-size: 1.5em") #{p.content}
         if typeof(p.attachments) !== undefined
             each f in p.attachments
                 form(action="/file/" + f.name, method="get")
