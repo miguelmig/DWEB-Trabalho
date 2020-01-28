@@ -15,6 +15,10 @@ socket.on('user joined', function (data) {
     console.log(data.users);
         $.each(data.users, function(index, user) { 
             console.log(user);
+            const users = $(".js-usersinchat");
+            while (users.firstChild) {
+                users.removeChild(users.firstChild);
+            }
             $(".js-usersinchat").append('<span id ='+user+'>&nbsp;&nbsp;<strong>'+user+'</strong></span>');
         });
     });
