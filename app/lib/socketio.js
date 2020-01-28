@@ -22,6 +22,7 @@ io.on('connection', function(socket){
 
     socket.on('join', function (user) {
        socket.username = user.username;
+       console.dir(users);
        users.push(socket.username);
        io.emit('user joined', { 'username': user.username, users:users });
     });
