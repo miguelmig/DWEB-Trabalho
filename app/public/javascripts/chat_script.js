@@ -3,7 +3,7 @@
     server
  */
 
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://ec2-35-178-100-150.eu-west-2.compute.amazonaws.com:3000');
 
 //var username = Math.random().toString(36).substr(2,8); 
 var username = sessionStorage.getItem("username");
