@@ -1,5 +1,9 @@
 div.card.mb-0
     div.card-body
+        if p.user_id === user.id
+            button.btn.close(data-dismiss="modal" aria-label="Close" value="Delete" onclick="apagaPost('" + p._id +"')")
+                span(aria-hidden="true") 
+                    h3 &times;
         div.clickable(onclick = "location.href = '/post/" + p._id + "/'")
             h3.card-title.mb-1= p.title
             each tag in p.tags

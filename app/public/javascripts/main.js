@@ -10,6 +10,19 @@ function apagaComentario(postid, commentid)
         .catch(error => console.log(error));
 }
 
+
+function apagaPost(postid)
+{
+    event.preventDefault();
+    console.log('Vou tentar apagar o ' + postid);
+    axios.delete("/post/" + postid)
+        .then(_ => {
+            //$('#' + commentid).remove()
+            window.location.assign('/')
+        })
+        .catch(error => console.log(error));
+}
+
 function updateSubscriptions(userid) {
 
     event.preventDefault();

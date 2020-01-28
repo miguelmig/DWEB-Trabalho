@@ -200,6 +200,12 @@ router.get('/post/:idpost', verificaAutenticao, (req, res) => {
 	.catch(err => res.render('error', {error: err, message: `----> Cant find the post with the id: ${req.params.idpost}`}))
 })
 
+router.delete('/post/:idpost/', verificaAutenticao, (req,res) => {
+	axios.delete(getAPIURL('post/' + req.params.idpost))
+	.then(response => res.jsonp(response.data))
+	.catch(err => res.render('error', {error: err, message: `----> we couldnt delete your post ${req.params.idpost}`}));
+})
+
 router.post('/post', verificaAutenticao, upload.array('files'), function (req, res) {
 	console.log("Post front-page: ");
 	console.dir(req.body);

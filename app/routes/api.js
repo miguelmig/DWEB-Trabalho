@@ -197,6 +197,14 @@ router.post('/post', check_token, upload.array('files'), (req, res) => {
     });
 })
 
+router.delete('/post/:idpost/', check_token, (req,res) => {
+
+    posts.delete(req.params.idpost)
+    .then(data => res.jsonp(data))
+    .catch(err => res.status(500).jsonp(err))
+})
+
+
 router.get('/post/:postid', check_token, (req, res) => {
     var postid = req.params.postid;
     posts.getById(postid)
