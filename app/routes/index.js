@@ -30,6 +30,7 @@ function renderUserPage(res, user) {
 	axios.get(getAPIURL('posts') + tags)
 	.then(response => {
 		//console.dir(response.data);
+		response.data.map(post => post.date = post.date.replace("T", " ").replace("Z", ""))
 		res.render('main/main_page',
 		{
 			title: 'Página principal', 
@@ -49,6 +50,7 @@ router.get('/posts', verificaAutenticao, function(req,res) {
 
 	axios.get(getAPIURL('posts') + "&" + url.parse(req.url).query)
 	.then(response => {
+		response.data.map(post => post.date = post.date.replace("T", " ").replace("Z", ""))
 		if (req.query.tag) {
 			res.render('main/posts_page', {user: req.user, posts: response.data});
 		} else if(req.query.q) {
@@ -136,6 +138,7 @@ router.get('/user/:userid', verificaAutenticao, (req, res) => {
 			var user = res1.data[0];
 			axios.get(getAPIURL('posts/' + req.params.userid))
 				.then(res2 => {
+					res2.data.map(post => post.date = post.date.replace("T", " ").replace("Z", ""))
 					res.render('main/user_page', {user: req.user, searched_user: user, posts: res2.data, can_edit: can_edit})
 				})
 				.catch(err => res.render('error', { error: err, message: "----> there was a problem getting your posts" }))
@@ -175,7 +178,10 @@ router.post('/post/:idpost/comment', verificaAutenticao, (req,res) => {
 		content: req.body.content
 	})
 	//.then(data => res.redirect('/post/' + req.params.idpost))
-	.then(response => res.jsonp(response.data))
+	.then(response => {
+		response.data.map(post => post.date = post.date.replace("T", " ").replace("Z", ""))
+		res.jsonp(response.data)
+	})
 	.catch(err => res.render('error', {error: err}))
 })
 
@@ -187,7 +193,10 @@ router.delete('/post/:idpost/comment/:idcomment', verificaAutenticao, (req,res) 
 
 router.get('/post/:idpost', verificaAutenticao, (req, res) => {
 	axios.get(getAPIURL('post/' + req.params.idpost))
-	.then(response => res.render('main/post-page', {p: response.data, user: req.user}))
+	.then(response => {
+		response.data.date = response.data.date.replace("T", " ").replace("Z", "")
+		res.render('main/post-page', {p: response.data, user: req.user})
+	})
 	.catch(err => res.render('error', {error: err, message: `----> Cant find the post with the id: ${req.params.idpost}`}))
 })
 
